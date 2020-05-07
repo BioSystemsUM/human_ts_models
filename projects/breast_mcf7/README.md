@@ -12,5 +12,8 @@ preprocess the expression levels
 ## Missing steps
 
 * Add simulation scripts
-    * Sampling with hit-and-run or geometric approach
+    * Sampling with hit-and-run or geometric approach?
     * pFBA - might be unreliable
+    * FVA
+    
+* Reconstruct normal breast tissue with GTEx
