@@ -132,14 +132,14 @@ def fastcore_reconstruction_func(score_tuple, params):
 # min_threshold and certain_threshold are considered active if their threshold is above the one specified in this
 # dictionary
 
-min_threshold = min_exp_options['0.1'] # average value of the 10th percentile for all genes
-certain_threshold = cert_exp_options['0.5'] # average value of the 50th percentile for all genes
-local_quantile_threshold = local_quantile_options['0.25'] # 25th percentile values for each gene
-
-sample_data_dict = process_values(sample_dict, min_threshold, certain_threshold, local_quantile_threshold)
-and_or_functions = funcs['minsum']
-
-cs_model = fastcore_reconstruction_func((and_or_functions, sample_data_dict), {'rw': rw})
+# min_threshold = min_exp_options['0.1'] # average value of the 10th percentile for all genes
+# certain_threshold = cert_exp_options['0.5'] # average value of the 50th percentile for all genes
+# local_quantile_threshold = local_quantile_options['0.25'] # 25th percentile values for each gene
+#
+# sample_data_dict = process_values(sample_dict, min_threshold, certain_threshold, local_quantile_threshold)
+# and_or_functions = funcs['minsum']
+#
+# cs_model = fastcore_reconstruction_func((and_or_functions, sample_data_dict), {'rw': rw})
 
 
 # to reconstruct multiple models, use this part snippet
@@ -148,5 +148,10 @@ labs, iters = zip(*runs.items())
 output = batch_run(fastcore_reconstruction_func, iters, {'rw': rw}, threads=min(len(runs), 12))
 batch_fastcore_res = dict(zip(labs, output))
 result_dicts.update(batch_fastcore_res)
+
+CS_MODEL_DF_FOLDER = os.path.join(ROOT_FOLDER, 'results/human1/reconstructions')
+pd.DataFrame.from_dict(result_dicts, orient='index').to_csv(os.path.join(CS_MODEL_DF_FOLDER,'cs_models.csv'))
+model_df = pd.DataFrame.from_dict(result_dicts, orient='index')
+
 
 ## save result_dicts somewhere
