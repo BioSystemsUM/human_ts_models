@@ -10,8 +10,8 @@ from cobra.io import read_sbml_model, write_sbml_model
 from cobamp.utilities.parallel import batch_run
 from troppo.methods_wrappers import ReconstructionWrapper
 from troppo.omics.core import TypedOmicsMeasurementSet, IdentifierMapping, OmicsContainer
-import matplotlib.pyplot as plt
-from numpy import arange
+
+from numpy import arange, log2, log, inf
 from itertools import product, chain
 
 
@@ -45,43 +45,29 @@ quantiles = arange(0.1, 0.9+step, step)
 gene_quantiles = omics_mset.data.quantile(quantiles)
 
 ## Generate dictionaries with the parameter options we'll need in the reconstruction part
-
 ## Minimum expression threshold
-min_exp_options = {str(round(quantiles[i], 2)): gene_quantiles.loc[quantiles[i],:].mean() for i in range(4)}
+def local_threshold(x, q1df, q2df):
+    return x.clip(q1df, q2df)
 
-## Certain expression threshold
-cert_exp_options = {str(round(quantiles[i], 2)): gene_quantiles.loc[quantiles[i],:].mean()
-                    for i in range(len(quantiles)//2, len(quantiles))}
+def process_samples(x, t, a):
+    return a*log2(1+(x/t)).fillna(0).replace({inf: 10*log(2)})
 
-## Gene-wise quantiles
-local_quantile_options = {str(round(quantiles[i], 2)):gene_quantiles.loc[quantiles[i],:]
-                          for i in range((len(quantiles)//2)+1)}
+lower_quantiles = omics_mset.data.quantile([0.1, 0.25, 0.5])
+upper_quantiles = omics_mset.data.quantile([0.5, 0.75, 0.9])
+avg_genes = omics_mset.data.mean()
+
+lq_opts = {str(round(k, 2)):v for k,v in lower_quantiles.iterrows()}
+uq_opts = {str(round(k, 2)):v for k,v in upper_quantiles.iterrows()}
+
 
 ## Assign a sample to reconstruct
 sample_id = 'ACH-000019'
-sample_df = exp_data.loc[[sample_id],:]
+sample_df = omics_mset.data.loc[sample_id,:]
+threshold_combinations = list(product(*[lq_opts.keys(),uq_opts.keys()]))
 
-## Define a function to take a dictionary with genes mapped to their expression value and a set of parameters,
-## returning another dictionary with processed values according to the following rules:
-## x >= certexp? convert to x/certexp : same as fold change
-## minexp <= x < certexp? convert to (x-local_quantile)/q, but bound the value to stay between -1 and 1
-## x < minexp? convert to ((x-minexp)/minexp) -1
+data_dicts = {(k,v): process_samples(sample_df,local_threshold(avg_genes, lq_opts[k], uq_opts[v]),5).to_dict()
+              for k,v in threshold_combinations}
 
-def process_values(exp_dict, minexp, certexp, local_quantiles):
-    def funcv(x, q):
-        return x/certexp if x >= certexp else min(max((x-q)/q, -1),1) if x >= minexp else -1-((x-minexp)/minexp)
-    return {k:funcv(v, local_quantiles[k]) for k,v in exp_dict.items()}
-
-
-# generate all possible parameter combinations
-threshold_combinations = list(product(*[min_exp_options.keys(),cert_exp_options.keys(),local_quantile_options.keys()]))
-# convert the data from pandas series to dict
-sample_dict = omics_mset.data.loc[sample_id,:].to_dict()
-
-# generate the processed expression scores according to each parameter value
-data_dicts = {(a,b,c):process_values(sample_dict,
-                             min_exp_options[a], cert_exp_options[b], local_quantile_options[c])
-              for a,b,c in threshold_combinations}
 
 
 ## read the metabolic model and simplify it
@@ -113,10 +99,11 @@ def fastcore_reconstruction_func(score_tuple, params):
     aofx, data_dict = score_tuple
     oc_sample = OmicsContainer(omicstype='transcriptomics', condition='x', data=data_dict, nomenclature='custom')
     rw = [params[k] for k in ['rw']][0]  # load parameters
+    t = 5*log(2)
     try:
         def integration_fx(data_map):
             return [[k for k, v in data_map.get_scores().items() if
-                     (v is not None and v > 0) or k in protected]]
+                     (v is not None and v > t) or k in protected]]
         return rw.run_from_omics(omics_container=oc_sample, algorithm='fastcore', and_or_funcs=aofx,
                                  integration_strategy=('custom', [integration_fx]), solver='CPLEX')
     except Exception as e:
@@ -132,17 +119,7 @@ def fastcore_reconstruction_func(score_tuple, params):
 # min_threshold and certain_threshold are considered active if their threshold is above the one specified in this
 # dictionary
 
-# min_threshold = min_exp_options['0.1'] # average value of the 10th percentile for all genes
-# certain_threshold = cert_exp_options['0.5'] # average value of the 50th percentile for all genes
-# local_quantile_threshold = local_quantile_options['0.25'] # 25th percentile values for each gene
-#
-# sample_data_dict = process_values(sample_dict, min_threshold, certain_threshold, local_quantile_threshold)
-# and_or_functions = funcs['minsum']
-#
-# cs_model = fastcore_reconstruction_func((and_or_functions, sample_data_dict), {'rw': rw})
-
-
-# to reconstruct multiple models, use this part snippet
+# to reconstruct multiple models, use this part
 result_dicts = {}
 labs, iters = zip(*runs.items())
 output = batch_run(fastcore_reconstruction_func, iters, {'rw': rw}, threads=min(len(runs), 12))
@@ -150,8 +127,4 @@ batch_fastcore_res = dict(zip(labs, output))
 result_dicts.update(batch_fastcore_res)
 
 CS_MODEL_DF_FOLDER = os.path.join(ROOT_FOLDER, 'results/human1/reconstructions')
-pd.DataFrame.from_dict(result_dicts, orient='index').to_csv(os.path.join(CS_MODEL_DF_FOLDER,'cs_models.csv'))
-model_df = pd.DataFrame.from_dict(result_dicts, orient='index')
-
-
-## save result_dicts somewhere
+pd.DataFrame.from_dict(result_dicts, orient='index').to_csv(os.path.join(CS_MODEL_DF_FOLDER,'cs_models_lt2.csv'))
