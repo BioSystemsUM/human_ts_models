@@ -36,13 +36,6 @@ omics_mset = TypedOmicsMeasurementSet(exp_data.index, exp_data.columns, exp_data
 # Keep the ensembl gene ID only
 omics_mset.column_names = [ensembl_patt.findall(k)[0] for k in omics_mset.column_names]
 
-## Preprocessing and conversion to scores
-## Define a step value to walk across
-step = 0.05
-
-## Generate different percentiles to obtain the respective values
-quantiles = arange(0.1, 0.9+step, step)
-gene_quantiles = omics_mset.data.quantile(quantiles)
 
 ## Generate dictionaries with the parameter options we'll need in the reconstruction part
 ## Minimum expression threshold
