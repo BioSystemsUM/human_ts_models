@@ -4,10 +4,14 @@ import re
 
 from urllib.request import urlretrieve
 
-from cobra.flux_analysis import find_blocked_reactions
+from cobra.flux_analysis import find_blocked_reactions, gapfill, pfba
+from cobra.flux_analysis.gapfilling import GapFiller
+from cobra.flux_analysis.variability import flux_variability_analysis
 from cobra.io import read_sbml_model, write_sbml_model
 
 from cobamp.utilities.parallel import batch_run
+from cobamp.wrappers.external_wrappers import get_model_reader
+from projects.breast_mcf7.scripts.omics import growth_media
 from troppo.methods_wrappers import ReconstructionWrapper
 from troppo.omics.core import TypedOmicsMeasurementSet, IdentifierMapping, OmicsContainer
 
@@ -77,9 +81,6 @@ model.remove_reactions(blocked)
 ## define the biomass reaction as protected so it doesn't get removed from the core
 protected = ['biomass_human']
 
-## instantiate the reconstruction wrapped
-rw = ReconstructionWrapper(model, ttg_ratio=9999)
-
 ## define a set of functions to replace AND/OR when generating scores
 funcs = {'minsum':((lambda x: min([max(y, 0) for y in x])), sum),
          'minmax':((lambda x: min([max(y, 0) for y in x])), max)}
@@ -87,22 +88,48 @@ funcs = {'minsum':((lambda x: min([max(y, 0) for y in x])), sum),
 ## generate a dictionary with all combinations of parameters + and/or functions
 runs = dict(chain(*[[((k,n),(aof, v)) for k,v in data_dicts.items()] for n, aof in funcs.items()]))
 
+
+## instantiate the reconstruction wrapper
+
+## when reconstructing models, you should use it unconstrained with open exchanges
+## if your core set contains reactions that are incompatible with the media, the algorithm
+## won't be able to reconstruct the model. for this reason, one should first reconstruct and then gapfill
+rw = ReconstructionWrapper(model, ttg_ratio=9999)
+
+
 ## define a multiprocessing friendly function to reconstruct models with fastcore
 def fastcore_reconstruction_func(score_tuple, params):
     aofx, data_dict = score_tuple
     oc_sample = OmicsContainer(omicstype='transcriptomics', condition='x', data=data_dict, nomenclature='custom')
     rw = [params[k] for k in ['rw']][0]  # load parameters
     t = 5*log(2)
+    def integration_fx(data_map):
+        return [[k for k, v in data_map.get_scores().items() if
+                 (v is not None and v > t) or k in protected]]
+
     try:
-        def integration_fx(data_map):
-            return [[k for k, v in data_map.get_scores().items() if
-                     (v is not None and v > t) or k in protected]]
         return rw.run_from_omics(omics_container=oc_sample, algorithm='fastcore', and_or_funcs=aofx,
                                  integration_strategy=('custom', [integration_fx]), solver='CPLEX')
     except Exception as e:
         print(e)
         return {r: False for r in rw.model_reader.r_ids}
 
+def tinit_reconstruction_func(score_tuple, params):
+    aofx, data_dict = score_tuple
+    oc_sample = OmicsContainer(omicstype='transcriptomics', condition='x', data=data_dict, nomenclature='custom')
+    rw = [params[k] for k in ['rw']][0]  # load parameters
+    def_val = max(oc_sample.get_Data().values())
+    t = 5*log(2)
+    try:
+        def tinit_integration_fx(data_map):
+            vtransform = lambda x,t: x/t if x >= t else (x-t)/t
+            return {k:(def_val if k in protected else vtransform(v,t) if v is not None else 0)
+                    for k, v in data_map.get_scores().items()}
+        return rw.run_from_omics(omics_container=oc_sample, algorithm='tinit', and_or_funcs=aofx,
+                                 integration_strategy=('custom', [tinit_integration_fx]), solver='CPLEX')
+    except Exception as e:
+        print(e)
+        return {r: False for r in rw.model_reader.r_ids}
 
 # to run a single model...
 # define three parameters:
@@ -117,7 +144,78 @@ result_dicts = {}
 labs, iters = zip(*runs.items())
 output = batch_run(fastcore_reconstruction_func, iters, {'rw': rw}, threads=min(len(runs), 12))
 batch_fastcore_res = dict(zip(labs, output))
+
+output_tinit = batch_run(tinit_reconstruction_func, iters, {'rw': rw}, threads=1)
+result_dicts.update(dict(zip(labs, output)))
 result_dicts.update(batch_fastcore_res)
 
 CS_MODEL_DF_FOLDER = os.path.join(ROOT_FOLDER, 'results/human1/reconstructions')
 pd.DataFrame.from_dict(result_dicts, orient='index').to_csv(os.path.join(CS_MODEL_DF_FOLDER,'cs_models_lt2.csv'))
+
+model_df = pd.read_csv(os.path.join(CS_MODEL_DF_FOLDER,'cs_models_lt2.csv'), index_col=[0,1])
+
+
+media_metabolites = growth_media.get_medium_metabolites('MEM', 'iHuman_id')
+# extra_metabolites = {'m02631s', 'm02039s', 'm02394s', 'm01822s',
+#                      'm02982s', 'm01938s', 'm01401s', 'm01330s',
+#                      'm02394s', 'm01361s', 'm01822s', 'm01361s',
+#                      'm01570s', 'm03147s', 'm01385s', 'm01629s'}
+#
+# {k:model.metabolites.get_by_id(k).name for k in extra_metabolites}
+extra_metabs = {'m10005s'}
+media_to_remove = {'m01628s'}
+media_metabolite_ids = ((set(media_metabolites['iHuman_id'].dropna().unique())) - media_to_remove) & \
+                       set([m.id for m in model.metabolites]) | extra_metabs
+
+cobamp_model = get_model_reader(model).to_cobamp_cbm('CPLEX')
+cobamp_model_boundrx = cobamp_model.get_boundary_reactions()
+media_boundrx = {k: cobamp_model_boundrx[k][0] for k in media_metabolite_ids if k in cobamp_model_boundrx.keys()}
+cobamp_model_boundrx_rev = {v[0]:k for k,v in cobamp_model_boundrx.items()}
+
+### check fatty acids to add
+extra_fas = set()
+for fametab in model.reactions.get_by_id('HMR_10033').metabolites:
+    tentative = fametab.id[:-1]+'s'
+    if tentative in cobamp_model_boundrx:
+        extra_fas |= {tentative}
+
+media_boundrx.update({m:cobamp_model_boundrx[m][0] for m in extra_fas})
+
+outflows = set(chain(*cobamp_model_boundrx.values())) - set(media_boundrx.values())
+
+mdict = model_df.iloc[0,:].to_dict()
+
+with model as m:
+    # m.remove_reactions([k for k,v in mdict.items() if not v and (k in cobamp_model.reaction_names) and (k not in outflows | set(media_boundrx.values()))])
+    # for r in outflows:
+    #     m.reactions.get_by_id(r).bounds = (-1000, 1000)
+    # for r,v in media_boundrx.items():
+    #     try:
+    #         m.reactions.get_by_id(v).bounds = (-1000, 1000)
+    #     except:
+    #         print(v,'not found')
+    for k,v in mdict.items():
+        if k not in cobamp_model_boundrx_rev.keys() and not v:
+            m.reactions.get_by_id(k).bounds = (0, 0)
+    for k in outflows:
+        m.reactions.get_by_id(k).bounds = (-0.001, 1000)
+    rvars = [m.reactions.get_by_id(r).reverse_variable for r in outflows]
+    m.objective = sum(rvars)
+    m.objective_direction = 'min'
+    m.reactions.biomass_human.bounds = (0.01, 0.03)
+    # gpfl  = gapfill(m, model, exchange_reactions=True)
+    sol = m.optimize()
+    m.objective = 'biomass_human'
+    m.objective_direction = 'max'
+
+    ofl_flx = sol.fluxes[outflows]
+    for k in outflows:
+        m.reactions.get_by_id(k).bounds = (0, 1000)
+    for k in ofl_flx[ofl_flx < 0].index:
+        m.reactions.get_by_id(k).bounds = (-1000, 1000)
+    m.reactions.biomass_human.bounds = (0, 1000)
+    pfba_sol = pfba(m)
+
+
+print(model.summary(pfba_sol, names=True, threshold=0.000001))
+
