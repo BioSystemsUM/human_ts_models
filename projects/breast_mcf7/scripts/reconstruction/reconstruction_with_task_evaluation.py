@@ -9,6 +9,7 @@ from cobra.flux_analysis.variability import find_blocked_reactions,flux_variabil
 from cobra.medium.minimal_medium import minimal_medium
 from cobra.flux_analysis import pfba
 from projects.breast_mcf7.src.filepaths import *
+DATA_PATH = os.path.join(ROOT_FOLDER, 'data/ccle/DepMap Public 20Q1/CCLE_expression_full.csv')
 
 from cobamp.utilities.parallel import batch_run
 import pandas as pd
@@ -71,8 +72,13 @@ if __name__ == '__main__':
 
 
 	# read the csv on DATA_PATH as a transcriptomics data set and get OmicsContainers, one per sample
-	ocs = TabularReader(path_or_df=DATA_PATH, nomenclature='entrez_id', omics_type='transcriptomics').to_containers()
+	data = pd.read_csv(DATA_PATH, index_col=0)
+	cols = [k.split('(')[1][:-1] for k in data.columns]
+	data.columns = cols
+	tab_rdr = TabularReader(path_or_df=data, nomenclature='ensembl_gene_id', omics_type='transcriptomics', cache_df=True)
+	ocs = tab_rdr.to_containers()
 	oc_sample = [oc for oc in ocs if oc.get_Condition() == 'ACH-000019'][0]
+	oc_sample.convertIds('entrez_id')
 
 	# create a reconstruction wrapper instance that loads the consistent model
 	# GPRs are assumed to be in DNF form if the ratio between tokens and unique genes is above ttg_ratio
@@ -91,7 +97,6 @@ if __name__ == '__main__':
 	# the second should be a dictionary with static variables needed to build the model:
 	# - threshold
 	# - reconstruction wrapper
-	xxx = None
 	def fastcore_reconstruction_func(t, params):
 		rw = [params[k] for k in ['rw']][0]  # load parameters
 		try:
@@ -103,8 +108,8 @@ if __name__ == '__main__':
 				return [[k for k, v in data_map.get_scores().items() if
 				         (v is not None and v > t) or k in ['BIOMASS_maintenance'] + list(uptake_drains_fix)]]
 
-			return rw.run_from_omics(omics_container=oc_sample, algorithm='fastcore', and_or_funcs=(min, sum),
-			                         integration_strategy=('custom', [integration_fx]), solver='CPLEX')
+			return rw.run_from_omics(omics_data=oc_sample, algorithm='fastcore', and_or_funcs=(min, sum),
+                                     integration_strategy=('custom', [integration_fx]), solver='CPLEX')
 		except Exception as e:
 			# the result from run_from_omics is a dict mapping reaction ids and a boolean flag - True if
 			# the reaction is in the model or false otherwise
@@ -123,11 +128,11 @@ if __name__ == '__main__':
 			protected = list(uptake_drains_fix) + ['biomass_reaction']
 
 			def score_apply(data_map):
-				dm = {k: 0 if v is None else (min(v, 10*log(2)) - t) if k not in protected else (10 * log(2)) for k, v in data_map.items()}
+				dm = {k: 0 if v is None else (min(v, 20*log(2)) - t) if k not in protected else (20 * log(2)) for k, v in data_map.items()}
 				return dm
 
-			return rw.run_from_omics(omics_container=oc_sample, algorithm='tinit', and_or_funcs=(min, sum),
-			                         integration_strategy=('continuous', score_apply), solver='CPLEX')
+			return rw.run_from_omics(omics_data=oc_sample, algorithm='tinit', and_or_funcs=(min, sum),
+                                     integration_strategy=('continuous', score_apply), solver='CPLEX')
 		except Exception as e:
 			# the result from run_from_omics is a dict mapping reaction ids and a boolean flag - True if
 			# the reaction is in the model or false otherwise
@@ -142,10 +147,10 @@ if __name__ == '__main__':
 	# - a list of objects for which we want to apply the function - ocs (list of omics_containers)
 	# - a dictionary with the static params - containing a 't' and 'rw' entry (see reconstruction_func)
 	# - an integer value specifying the amount of parallel processes to be run
-	batch_fastcore_res = batch_run(fastcore_reconstruction_func, ts*10*log(2), {'rw': rw}, threads=min(len(ts), 12))
+	batch_fastcore_res = batch_run(fastcore_reconstruction_func, ts*2*log(2), {'rw': rw}, threads=min(len(ts), 12))
 
 	#batch_tinit_res = batch_run(tinit_reconstruction_func, [5*log(2)], {'rw': rw}, threads=1)
-	batch_tinit_res = [tinit_reconstruction_func(5*log(2), {'rw': rw})]
+	batch_tinit_res = [tinit_reconstruction_func(log(2), {'rw': rw})]
 	# create a dict mapping tuple of algorithm and condition informations: e.g. ('fastcore','MCF7')
 	# to each result from fastcore
 	fastcore_res_dict = dict(zip([('fastcore', str(i)) for i in range(len(ts))], batch_fastcore_res))
