@@ -101,8 +101,6 @@ def tinit_reconstruction_func(score_tuple, params):
     aofx, data_dict = score_tuple
     oc_sample = OmicsContainer(omicstype='transcriptomics', condition='x', data=data_dict, nomenclature='custom')
     rw = [params[k] for k in ['rw']][0]  # load parameters
-    def_val = max(oc_sample.get_Data().values())
-    t = 5*log(2)
     try:
         def tinit_integration_fx(data_map):
             return {k:v if v is not None else 0 for k, v in data_map.get_scores().items()}
@@ -112,15 +110,7 @@ def tinit_reconstruction_func(score_tuple, params):
         print(e)
         return {r: False for r in rw.model_reader.r_ids}
 
-# to run a single model...
-# define three parameters:
-# min_threshold: minimum expression value required for all genes to be considered possibly active
-# certain_threshold: minimum expression value required to consider a gene as certainly active
-# local_quantile_threshold: a dictionary with threshold values for each gene. genes with expression between
-# min_threshold and certain_threshold are considered active if their threshold is above the one specified in this
-# dictionary
 
-# to reconstruct multiple models, use this part
 result_dicts = {}
 labs, iters = zip(*runs.items())
 flabs = [tuple(['fastcore']+list(l)) for l in labs]
