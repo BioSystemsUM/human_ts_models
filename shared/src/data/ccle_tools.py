@@ -27,7 +27,7 @@ class CCLEDataDownloader(object):
 			# self.file_md.to_csv(os.path.join(self.ldir, self.INTERNAL_MD_FILE_NAME))
 
 	def update_local_md_file(self):
-		os.makedirs(self.ldir)
+		if not os.path.exists(self.ldir): os.makedirs(self.ldir)
 		self.file_md.to_csv(os.path.join(self.ldir, self.INTERNAL_MD_FILE_NAME), index='file')
 
 
