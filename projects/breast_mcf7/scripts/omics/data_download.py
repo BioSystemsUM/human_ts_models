@@ -1,3 +1,5 @@
+import sys
+sys.path.extend(['/home/vvieira/human_ts_models/'])
 from shared.src.data.ccle_tools import CCLEDataDownloader
 
 ccle_downloader = CCLEDataDownloader(local_dir='projects/breast_mcf7/data/ccle/')
@@ -7,12 +9,11 @@ def latest_expression(md):
 
 def latest_info(md):
 	return (md['fileName'] == 'sample_info_v2.csv') & (md['releaseName'] == 'DepMap Public 20Q1')
-
 # def latest_metabolomics(md):
 # 	return md['fileName'] == 'CCLE_metabolomics_20190502.csv'
 
 def latest_gene_dep(md):
-	return (md['fileName'] == 'Achilles_gene_effect.csv') & (md['releaseName'] == 'DepMap Public 20Q1')
+	return (md['fileName'] == 'Achilles_gene_effect_v2.csv') & (md['releaseName'] == 'DepMap Public 20Q1')
 
 
 def latest_proteomics(md):

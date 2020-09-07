@@ -4,7 +4,7 @@ sys.path.extend(['/home/vvieira/cobamp', '/home/vvieira/human_ts_models', '/home
 
 from troppo.omics.id_converter import idConverter
 import pandas as pd
-from numpy import array, log2, inf, apply_along_axis, power, sum, log, fromfunction, where
+from numpy import array, log2, log, fromfunction, where
 from functools import reduce
 
 
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	EXPFILE_PATH = 'projects/breast_mcf7/data/ccle/DepMap Public 20Q1/CCLE_expression_full.csv'
 	EXPFINL_PATH = 'projects/breast_mcf7/data/ccle/DepMap Public 20Q1/CCLE_expression_full_entrez.csv'
 	EXPPP_PATH = 'projects/breast_mcf7/data/ccle/DepMap Public 20Q1/CCLE_expression_log2pp.csv'
-	EXPCOMB_PATH = 'projects/breast_mcf7/data/ccle/DepMap Public 20Q1/CCLE_expression_multiple_apprx.csv'
+	EXPCOMB_PATH = 'projects/breast_mcf7/data/ccle/DepMap Public 20Q1/CCLE_expression_ACH-000019_scores.csv'
 
 	exp_df_ccle = pd.read_csv(EXPFILE_PATH, index_col=0)
 
@@ -86,16 +86,18 @@ if __name__ == '__main__':
 	for v, k in global_lt2_params:
 		gtl, gtu, lt = global_thresholds.iloc[k[0]], global_thresholds.iloc[k[1]], quantiles.iloc[v,:]
 		upp_activity = (1+(sample_series/gtu).apply(log)).clip(-maxexp, 1+maxexp)
+
 		gtu_inactive = upp_activity < 1
-		low_activity = (sample_series[gtu_inactive]/gtl).apply(log).clip(-maxexp, maxexp)
-		gtl_maybes = low_activity > 0
-		activity_maybe = (sample_series[gtu_inactive][gtl_maybes]/lt[gtu_inactive][gtl_maybes]).\
+		low_activity = (sample_series/gtl).apply(log).clip(-maxexp, maxexp)
+		gtl_maybes, gtl_lows = (low_activity >= 0) & gtu_inactive, low_activity < 0
+		upp_activity[gtl_lows] = low_activity[gtl_lows]
+		activity_maybe = (sample_series[gtl_maybes]/lt[gtl_maybes]).\
 			apply(log).clip(-maxexp, maxexp)
-		upp_activity[activity_maybe.index] = activity_maybe.clip(-1, 1)
+		upp_activity[gtl_maybes] = activity_maybe.clip(-1, 1)
 
 		local2_dicts[('local2',k[0],k[1],v)] = upp_activity.to_dict()
 
-
+	x = pd.concat(pd.DataFrame.from_dict(d).T for d in [global_dicts, local1_dicts, local2_dicts])
 	pd.concat(pd.DataFrame.from_dict(d).T for d in [global_dicts, local1_dicts, local2_dicts]).to_csv(EXPCOMB_PATH)
 	# exp_df_ccle = get_mappable_df(exp_df_ccle, 'ensembl_gene_id')
 	# exp_df_ccle.to_csv(EXPFINL_PATH)

@@ -2,32 +2,27 @@ import os
 import pandas as pd
 import re
 
-import sys; print('Python %s on %s' % (sys.version, sys.platform))
+import sys
+
+
+print('Python %s on %s' % (sys.version, sys.platform))
 sys.path.extend(['/home/vvieira/cobamp', '/home/vvieira/human_ts_models', '/home/vvieira/troppo',
                  '/home/vvieira/cobamp/src', '/home/vvieira/troppo/src', '/home/vvieira/human_ts_models'])
 
-from urllib.request import urlretrieve
-
-from cobra.flux_analysis import find_blocked_reactions, pfba
-from cobra.io import read_sbml_model, write_sbml_model
-
-from cobamp.utilities.file_io import pickle_object
 from cobamp.utilities.parallel import batch_run
-from cobamp.wrappers.external_wrappers import get_model_reader
-from projects.breast_mcf7.scripts.omics import growth_media
 from troppo.methods_wrappers import ReconstructionWrapper
 from troppo.omics.core import TypedOmicsMeasurementSet, IdentifierMapping, OmicsContainer
-
-from numpy import log
+from projects.breast_mcf7.scripts.human1.models import get_human1_model
 from itertools import chain
 
 ROOT_FOLDER = 'projects/breast_mcf7'
-DATA_PATH = os.path.join(ROOT_FOLDER, 'data/ccle/DepMap Public 20Q1/CCLE_expression_multiple_apprx.csv')
+DATA_PATH = os.path.join(ROOT_FOLDER, 'data/ccle/DepMap Public 20Q1/CCLE_expression_ACH-000019_scores.csv')
 SAMPLE_INFO = os.path.join(ROOT_FOLDER, 'data/ccle/DepMap Public 20Q1/sample_info_v2.csv')
-CS_MODEL_DF_FOLDER = os.path.join(ROOT_FOLDER, 'results/human1/reconstructions')
+CS_MODEL_DF_FOLDER = os.path.join(ROOT_FOLDER, 'results/human1/reconstructions/mcf7_comparison')
 
-MODEL_PATH = 'projects/breast_mcf7/support/Human-GEM.xml'
-NTHREADS = 40
+if not os.path.exists(CS_MODEL_DF_FOLDER): os.makedirs(CS_MODEL_DF_FOLDER)
+CS_MODEL_NAMES = 'cs_models_all_combinations'
+NTHREADS = 12
 
 ## create a regex pattern to identify ensembl names in a string
 ensembl_patt = re.compile('ENSG[0-9]*')
@@ -50,24 +45,15 @@ omics_mset.column_names = [ensembl_patt.findall(k)[0] for k in omics_mset.column
 
 
 ## read the metabolic model and simplify it
-if not os.path.exists(MODEL_PATH):
-    path, _ = urlretrieve('https://github.com/SysBioChalmers/Human-GEM/raw/master/modelFiles/xml/HumanGEM.xml')
-    model = read_sbml_model(path)
-    write_sbml_model(model, MODEL_PATH)
-else:
-    model = read_sbml_model(MODEL_PATH)
-model.remove_metabolites([m for m in model.metabolites if m.compartment == 'x'])
-blocked = find_blocked_reactions(model)
-model.remove_reactions(blocked)
-
+model = get_human1_model()
 
 data_dicts = {'_'.join(map(str,k)):v for k,v in omics_mset.data.T.to_dict().items()}
 ## define the biomass reaction as protected so it doesn't get removed from the core
-protected = ['biomass_human']
+protected = ['biomass_human','HMR_10023','HMR_10024']
 
 ## define a set of functions to replace AND/OR when generating scores
-funcs = {'minsum':((lambda x: min([max(y, 0) for y in x])), sum),
-         'minmax':((lambda x: min([max(y, 0) for y in x])), max)}
+funcs = {'minsum':(min, sum),
+         'minmax':(min, max)}
 
 ## generate a dictionary with all combinations of parameters + and/or functions
 runs = dict(chain(*[[((k,n),(aof, v)) for k,v in data_dicts.items()] for n, aof in funcs.items()]))
@@ -103,7 +89,11 @@ def tinit_reconstruction_func(score_tuple, params):
     rw = [params[k] for k in ['rw']][0]  # load parameters
     try:
         def tinit_integration_fx(data_map):
-            return {k:v if v is not None else 0 for k, v in data_map.get_scores().items()}
+            maxv = max([k for k in data_map.get_scores().values() if k is not None])
+            scores = {k:(v/maxv if v < 0 else v) if v is not None else 0 for k, v in data_map.get_scores().items()}
+            scores.update({x:max(scores.values()) for x in protected})
+            return scores
+
         return rw.run_from_omics(omics_data=oc_sample, algorithm='tinit', and_or_funcs=aofx,
                                  integration_strategy=('custom', [tinit_integration_fx]), solver='CPLEX')
     except Exception as e:
@@ -111,16 +101,19 @@ def tinit_reconstruction_func(score_tuple, params):
         return {r: False for r in rw.model_reader.r_ids}
 
 
+
 result_dicts = {}
 labs, iters = zip(*runs.items())
+
+tlabs = [tuple(['tinit']+list(l)) for l in labs]
+output = batch_run(tinit_reconstruction_func, iters, {'rw': rw}, threads=min(len(runs), 3))
+batch_tinit_res = dict(zip(tlabs, output))
+result_dicts.update(batch_tinit_res)
+
 flabs = [tuple(['fastcore']+list(l)) for l in labs]
 output = batch_run(fastcore_reconstruction_func, iters, {'rw': rw}, threads=min(len(runs), NTHREADS))
 batch_fastcore_res = dict(zip(flabs, output))
 result_dicts.update(batch_fastcore_res)
 
-tlabs = [tuple(['tinit']+list(l)) for l in labs]
-output = batch_run(tinit_reconstruction_func, iters, {'rw': rw}, threads=min(len(runs), 1))
-batch_tinit_res = dict(zip(tlabs, output))
-result_dicts.update(batch_tinit_res)
 
-pd.DataFrame.from_dict(result_dicts, orient='index').to_csv(os.path.join(CS_MODEL_DF_FOLDER,'cs_models_all_combinations.csv'))
+pd.DataFrame.from_dict(result_dicts, orient='index').to_csv(os.path.join(CS_MODEL_DF_FOLDER,CS_MODEL_NAMES+'.csv'))
