@@ -26,8 +26,6 @@ else:
                            '/home/vvieira/cobamp/src:/home/vvieira/troppo/src:/home/vvieira/human_ts_models'
     }
 
-globals().update(config_dict)
-
 if 'SOURCES_TO_ADD' in config_dict:
     sys.path.extend(config_dict['SOURCES_TO_ADD'].split(':'))
 
