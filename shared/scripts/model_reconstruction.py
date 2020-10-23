@@ -2,7 +2,6 @@ import os, sys
 import pandas as pd
 import re
 
-from cobra.io import read_sbml_model
 
 arg = [arg.split('=')[1] for arg in sys.argv[1] if '-config=' in arg]
 if len(arg) > 0:
@@ -29,6 +28,7 @@ else:
 if 'SOURCES_TO_ADD' in config_dict:
     sys.path.extend(config_dict['SOURCES_TO_ADD'].split(':'))
 
+from cobra.io import read_sbml_model
 from cobamp.utilities.parallel import batch_run, cpu_count
 from troppo.methods_wrappers import ReconstructionWrapper
 from troppo.omics.core import TypedOmicsMeasurementSet, IdentifierMapping, OmicsContainer
