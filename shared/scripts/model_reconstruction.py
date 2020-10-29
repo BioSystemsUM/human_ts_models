@@ -132,7 +132,7 @@ if __name__ == '__main__':
         oc_sample = OmicsContainer(omicstype='transcriptomics', condition='x',
                                    data=data_dict, nomenclature='custom')
 
-        params['rw'].run_from_omics(omics_data=oc_sample, algorithm=alg, and_or_funcs=aofunc,
+        return params['rw'].run_from_omics(omics_data=oc_sample, algorithm=alg, and_or_funcs=aofunc,
                           integration_strategy=params['strategies'][alg], solver='CPLEX', raise_errors=False)
 
     safe_threads = {'tinit': max(1, NTHREADS // 16), 'fastcore': NTHREADS}
