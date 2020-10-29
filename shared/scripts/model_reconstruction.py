@@ -4,7 +4,7 @@ import re
 import resource
 
 if __name__ == '__main__':
-    arg = [argval.split(' =')[1] for argval in sys.argv[1:] if '-config=' in argval]
+    arg = [argval.split('=')[1] for argval in sys.argv[1:] if '-config=' in argval]
     mp = '-no-mp' not in sys.argv[1:]
 
     if len(arg) > 0:
