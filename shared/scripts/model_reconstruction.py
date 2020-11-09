@@ -153,7 +153,7 @@ if __name__ == '__main__':
                 reconstructions.update(dict(zip(batch,batch_run(reconstruct_model, batch_args, params, threads=v))))
             else:
                 for barg in batch_args:
-                    reconstructions[tuple(batch)] = reconstruct_model(barg, params)
+                    reconstructions[tuple(barg)] = reconstruct_model(barg, params)
 
     print('Writing models')
     pd.DataFrame.from_dict(reconstructions, orient='index').\
