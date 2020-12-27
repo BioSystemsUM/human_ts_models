@@ -1,0 +1,6 @@
+/usr/local/bin/trimmomatic: line 6: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8): No such file or directory
+TrimmomaticPE: Started with arguments:
+ -threads 60 /data/data/R4.10.2/rawData/SCC3_1.fastq.gz /data/data/R4.10.2/rawData/SCC3_2.fastq.gz /data/data/R4.10.2/trimmedData/SCC3TrimmedFoward.fastq.gz /data/data/R4.10.2/trimmedData/SCC3TrimmedFowardUnpaired.fastq.gz /data/data/R4.10.2/trimmedData/SCC3TrimmedReverse.fastq.gz /data/data/R4.10.2/trimmedData/SCC3TrimmedReverseUnpaired.fastq.gz LEADING:0 TRAILING:0 SLIDINGWINDOW:0:0 MINLEN:36 AVGQUAL:20
+Quality encoding detected as phred33
+Input Read Pairs: 28377065 Both Surviving: 28189913 (99.34%) Forward Only Surviving: 181403 (0.64%) Reverse Only Surviving: 4667 (0.02%) Dropped: 1082 (0.00%)
+TrimmomaticPE: Completed successfully
