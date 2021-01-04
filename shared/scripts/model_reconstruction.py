@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import resource
 
+
 if __name__ == '__main__':
     arg = [argval.split('=')[1] for argval in sys.argv[1:] if '-config=' in argval]
     mp = '-no-mp' not in sys.argv[1:]
@@ -40,6 +41,11 @@ if __name__ == '__main__':
         sys.path.extend(sources_to_add)
 
     from cobra.io import read_sbml_model
+    from cobra.util.solver import solvers
+    from cobra.core.configuration import Configuration
+
+    Configuration.solver = solvers['cplex']
+
     from cobra.flux_analysis import find_blocked_reactions
     from urllib.request import urlretrieve
 
@@ -144,16 +150,17 @@ if __name__ == '__main__':
         batch = [j for j in models_to_reconstruct if j[0] == k]
 
         if len(batch) > 0:
-            alg, dd, intf = zip(*batch)
-            ddicts = [data_dicts[i] for i in dd]
-            batch_args = list(zip(alg, ddicts, intf))
-
             if mp:
+                alg, dd, intf = zip(*batch)
+                ddicts = [data_dicts[i] for i in dd]
+                batch_args = list(zip(alg, ddicts, intf))
                 print('\tResource statistics before reconstruction with',k,':', resource.getrusage(resource.RUSAGE_SELF))
                 reconstructions.update(dict(zip(batch,batch_run(reconstruct_model, batch_args, params, threads=v))))
             else:
-                for barg in batch_args:
-                    reconstructions[tuple(barg)] = reconstruct_model(barg, params)
+                for algo, ddi, intfx in batch:
+                    data_dict = data_dicts[ddi]
+                    print('Key = ',(algo, ddi, intfx))
+                    reconstructions[(algo, ddi, intfx)] = reconstruct_model((algo, data_dict, intfx), params)
 
     print('Writing models')
     pd.DataFrame.from_dict(reconstructions, orient='index').\
