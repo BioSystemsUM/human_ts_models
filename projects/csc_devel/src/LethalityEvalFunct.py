@@ -4,7 +4,6 @@ import pandas as pd
 import pickle
 import ast
 import re
-import cobra
 import numpy as np
 from sklearn.metrics import matthews_corrcoef
 from functools import reduce
@@ -25,38 +24,80 @@ def saveResult(res, path):  # save results as pickle
     pickle.dump(res, file)
     file.close()
 
-def ThrsRcScores4aSample(BaseDir, sample, model):
+def ThrsRcScores4aSample(BaseDir, model):
     '''
-    - get a list of threshold + and/or rule names and list of dictionaries with corresponding reaction:reaction-scores
+    - save a list of threshold + and/or rule names and list of dictionaries with corresponding reaction:reaction-scores,
+      for best thresholds to test in G1 and G17
     :param BaseDir: base directory
-    :param sample: sample for which we want to build models, corresponding to dif. thresholds
     :param model: generic model
-    :return thrLst: list of threshold names
-    :return rcLst: list of dictionaries
     '''
+    crspD = {'G1': 'M2.2.13.CCs_Huh7', 'G17': 'R5.8.2.TN.CCs_HCC1937'}
     # get dict with threshold + and/or rule combinations vs dataframe with samples in columns and reactions in rows, where values are react scores:
     path = os.path.join(BaseDir, 'support/TestGeneScores', 'AllStudiesAllthresholdsDct.pkl')
     infile = open(path,'rb')
     StdReacScores = pickle.load(infile)
     infile.close()
-    # load all thresholds to test:
-    thrspath = os.path.join(BaseDir, 'support/TestGeneScores', 'threshighestNbGroups')
-    thrs = list(pd.read_csv(thrspath, sep='\t', index_col=[0, 1], header=None).index)
-    # get a list of thresholds to test and corresponding dicts with reaction scores of sample for which we want to reconstruct models:
-    rcLst = list()
-    thrLst = list()
-    for thr in thrs:
-        rcD = StdReacScores[thr][sample].fillna(0).to_dict() # replace 'NaN' (corresponding to genes present in one microarray/rnaseq platform that are absent in another) by 0 (it's the score that is given to 'None' values bellow)
-        rcLst.append(rcD)
-        thrLst.append(thr)
-    # add scores 'None' to reactions that do not have gene-reaction-rule (previously removed cause had gene score of NaN for all models):
-    mdRcIds = {r.id for r in model.reactions}
-    WithGeneReacRule = set(rcLst[0].keys())
-    NoGeneReacRule = mdRcIds - WithGeneReacRule
-    NoGeneReacRuleDct = {rid: None for rid in NoGeneReacRule}
-    for d in rcLst:
-        d.update(NoGeneReacRuleDct)
-    return thrLst, rcLst
+    # load all thresholds to test for each study/sample group
+    path = os.path.join(BaseDir, 'support/TestGeneScores', 'thres2testGroups.pkl')
+    infile = open(path, 'rb')
+    thrsD = pickle.load(infile)
+    infile.close()
+    for k,v in thrsD.items(): # for each group of samples/study
+        # get a list of thresholds to test and corresponding dicts with reaction scores of sample for which we want to reconstruct models:
+        rcLst = list()
+        thrLst = list()
+        for thr in v:
+            rcD = StdReacScores[thr][crspD[k]].fillna(0).to_dict() # replace 'NaN' (corresponding to genes present in one microarray/rnaseq platform that are absent in another) by 0 (it's the score that is given to 'None' values bellow)
+            rcLst.append(rcD)
+            thrLst.append(thr)
+        # add scores 'None' to reactions that do not have gene-reaction-rule (cause those had been excluded from 'AllStudiesAllthresholdsDct.pkl' in function GetDictOfReacScoresDF of testGeneScrs.py):
+        mdRcIds = {r.id for r in model.reactions}
+        WithGeneReacRule = set(rcLst[0].keys())
+        NoGeneReacRule = mdRcIds - WithGeneReacRule
+        NoGeneReacRuleDct = {rid: None for rid in NoGeneReacRule}
+        for d in rcLst:
+            d.update(NoGeneReacRuleDct)
+        thrdir = os.path.join(BaseDir, 'support/TestGeneScores/models2Test')
+        rcdir = os.path.join(BaseDir, 'support/TestGeneScores/rcScores2Test')
+        if not os.path.exists(thrdir):
+            os.makedirs(thrdir)
+        if not os.path.exists(rcdir):
+            os.makedirs(rcdir)
+        saveResult(res=thrLst, path=os.path.join(thrdir, crspD[k] + '.pkl')) # save list of thresholds to test
+        saveResult(res=rcLst, path=os.path.join(rcdir, crspD[k] + '.pkl')) # save list of corresponding reaction scores to test
+        pd.DataFrame([len(thrLst)]).to_csv(os.path.join(BaseDir, 'support/TestGeneScores/models2Test/NumbModels' + crspD[k] + '.tab'), sep='\t', header=False, index=False)
+
+
+def createLstRct2Test(model, BaseDir):
+    '''
+    - split model reaction ids (except boundaries/exchanges) into different files to be used for analysis with cluster
+      (cluster uses different jobs, ech job processes one group of reactions. 1 file)
+    :param model: generic metabolic model
+    :param BaseDir: basic directory
+    '''
+    # close model exchange/boundary reactions (in "human1" all boundaries are exchange reactions):
+    taskModel = model.copy()
+    for r in taskModel.boundary:
+        r.knock_out()
+    # get all reactions of generic model except boundaries/exchange reactions:
+    rids = {r.id for r in taskModel.reactions}
+    bdrids = {r.id for r in taskModel.boundary}
+    frids = list(rids - bdrids)
+    # split reactions in groups (each group is going to be run as a job in the cluster):
+    grps = 30
+    integ = len(frids)//grps # how many elements each group is going to have
+    remain = len(frids)%grps # how many elements the last group has
+    intv = grps*[integ] + [remain]
+    i = 0
+    dir = os.path.join(BaseDir, 'support/LethalityEval/ModelRc2Test')
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    for v in intv: # v is size of each group
+        print(i)
+        f = i + v
+        pd.Series(frids[i:f]).to_csv(os.path.join(BaseDir, 'support/LethalityEval/ModelRc2Test/EssLst' + str(i)), index=False, header=False) # saves each group in a file
+        i = i + v
+
 
 def fastcoreReacfunc_ReacScores(Rscore, params):
     '''
@@ -120,17 +161,17 @@ def ReconstructionReac_ReacScores(model, labs, iters, path, alg, testThres):
         output = batch_run(fastcoreReacfunc_ReacScores, iters, {'rw': rw}, threads=min(len(iters), NTHREADS))
         batch_fastcore_res = dict(zip(flabs, output)) # create dictionary with fastcore combinations' labels and dictionaries mapping reactionId to bolean (True - means reaction kept after reconstruction)
         result_dicts.update(batch_fastcore_res) # to merge above dictionary with a similar one below for tinit
-        # Get reactions to exclude when reconstruting with INIT:
+        # Get reactions to exclude when reconstructing with INIT:
         output = batch_run(initReacfunc_ReacScores, iters, {'rw': rw}, threads=min(len(iters), 2))
         batch_tinit_res = dict(zip(tlabs, output))
         result_dicts.update(batch_tinit_res)
     elif alg == 'fastcore':
-        # Get reactions to exclude when reconstruting with FASTCORE:
+        # Get reactions to exclude when reconstructing with FASTCORE:
         output = batch_run(fastcoreReacfunc_ReacScores, iters, {'rw': rw}, threads=min(len(iters), NTHREADS))
         batch_fastcore_res = dict(zip(flabs,output))  # create dictionary with fastcore combinations' labels and dictionaries mapping reactionId to bolean (True - means reaction kept after reconstruction)
         result_dicts.update(batch_fastcore_res)  # to merge above dictionary with a similar one below for tinit
     elif alg == 'init':
-        # Get reactions to exclude when reconstruting with INIT:
+        # Get reactions to exclude when reconstructing with INIT:
         output = batch_run(initReacfunc_ReacScores, iters, {'rw': rw}, threads=min(len(iters), 2))
         batch_tinit_res = dict(zip(tlabs, output))
         result_dicts.update(batch_tinit_res)
@@ -142,19 +183,20 @@ def retry_if_RuntimeError(exception):
     """Return True if we should retry (in this case when it's an RuntimeError), False otherwise"""
     return isinstance(exception, RuntimeError)
 
-def Reconst_taskEval(modelMedAdap, task_list, BiomassMetbExtID, BaseDir, protected, Finalpath, BoolDict, StudyNumb):
+def Reconst_taskEval(modelMedAdap, task_list, BaseDir, BiomassMetbExtID, protected, Finalpath, BoolDict, StudyNumb, fname):
     '''
     - gapfill reconstructed models with EFM methods and then gapfill for tasks with cobrapy gapfill,
     - saves: * info on models that did not grow or did not performed tasks and info on gafill solution reactions
              * dataframe where rows are reactionIDs, columns are models' names, values are bounds of reconstructed and gapfilled models on specific medium
     :param modelMedAdap: model adapted for specific medium composition (exchange reaction of medium metabolites are open and remaining have bounds LB=0, UB=1000)
     :param task_list: list of tasks to test
-    :param BiomassMetbExtID: id of biomass metabolite in external compartment
     :param BaseDir: basic directory
+    :param BiomassMetbExtID: id of biomass metabolite in external compartment
     :param protected: reactions related with biomass production and exchange/transport to in/out of cell
     :param Finalpath: directory where to save results
     :param BoolDict: dict where key is ('algorithm', 'threshold', 'And/Or function') and value another dict with (reactID: True/False - to include or to exclude)
     :param StudyNumb: when testing different thresholds for same study is a string with study number, otherwise use ''
+    :param fname: name of file with reconst. alg. output
     '''
     exg_rx_ids = {r.id for r in modelMedAdap.exchanges}  # model exchange reactions ids
     tasksDic = {task.name: task for task in task_list}  # dict with task name : task
@@ -174,32 +216,13 @@ def Reconst_taskEval(modelMedAdap, task_list, BiomassMetbExtID, BaseDir, protect
             print('algorithm did not find solution for model ' + str(modelID))
             NotReconst.append('_'.join(modelID))
             continue
-        ## gapfill model with EFM method when model doesn't grow:
-        nonConsReac = {exc.id for exc in modelMedAdap.exchanges if exc.bounds[0] >= 0 and exc.bounds[1] > 0}  # exchange reactions where metabolites are non-consumed (lb>=0, ub>0)
-        nonConsMetb = [list(modelMedAdap.reactions.get_by_id(r).metabolites)[0].id for r in nonConsReac]  # metabolites of exchange reactions where metabolites are non-consumed
-        nonConsMetb = set(nonConsMetb) - {BiomassMetbExtID}  # biomass has to be excluded from non-consumed (although it is not consumed) cause it is excreted (lb>0,ub>0, so lb is dif. from 0)
-        ls_override = {'produced': {BiomassMetbExtID}, 'non_consumed': nonConsMetb}  # produced is biomass boundary. it's same as optimize for biomass production reaction, as there is only one reaction that produces biomass in cytosol. No need to turn biomass boundary irreversible (biomass[s] -> ) as it is already done when adapting medium
         # list of reactions to be removed according to reconstruction algorithm,
         # excludes exchange reactions (to preserve adaptation to medium composition),
         # excludes reactions essential for essential tasks in generic model and reactions related with biomass production/transport:
         Id2Remove = list({id for id, bol in d.items() if not bol} - exg_rx_ids - set(protected) - set(EssRcTasks))
-        # find model gapfill solution with EFM method if it can/if needed:
-        gapfillsol = gpfl_wrapper.run(avbl_fluxes=Id2Remove, ls_override=ls_override, algorithm='efm')  # model gapfill solution
-        if len(gapfillsol) != 0:  # if gapfillsol is not empty (if models needs gapfill to grow)
-            gapfillsol = gapfillsol[0]
-            RecModelGapReac['_'.join(modelID)] = gapfillsol
-        # reconstruct model gapfilled:
+        # reconstruct model:
         taskModel = modelMedAdap.copy()  # model used as reconstructed model and for task gapfill - adapted for medium composition
-        Id2Remove = list(set(Id2Remove) - set(gapfillsol)) # exclude from reactions to remove those of solution to model gapfill
         taskModel.remove_reactions(Id2Remove, remove_orphans=False) # do not remove orphan metabolites (that have no association with any reaction) for now, to be able to test tasks that use these metabolites
-        # test if reconstructed model produces biomass after adding model gapfill:
-        opt = taskModel.optimize()
-        status = opt.status
-        val = opt.objective_value
-        if status != 'optimal' or val < 1E-9:
-            print('model ' + '_'.join(modelID) + ' not producing biomass after model gapfill')
-            NotProdBmss.append(', '.join(['_'.join(modelID), 'feasibility: ' + status, 'objective_value: ' + str(val)]))
-            continue  # move to next model if model does not grow
         ## evaluate/gapfill each essential task on reconstructed model (sequential gapfill):
         GapFillTasksReacIds = list()
         UnivTaskModel = modelMedAdap.copy()  # generic model to use for model/task gapfill - adapted for medium composition
@@ -245,9 +268,23 @@ def Reconst_taskEval(modelMedAdap, task_list, BiomassMetbExtID, BaseDir, protect
         if len(GapFillTasksReacIds) != 0:
             GapFillTasksReacIds = reduce(lambda x,y: x+y, GapFillTasksReacIds) # flats list of lists into a list
         GapFillTasksReac['_'.join(modelID)] = GapFillTasksReacIds
+        # try to gapfill model with EFMs when model doesn't grow:
+        nonConsReac = {exc.id for exc in modelMedAdap.exchanges if exc.bounds[0] >= 0 and exc.bounds[1] > 0}  # exchange reactions where metabolites are non-consumed (lb>=0, ub>0)
+        nonConsMetb = [list(modelMedAdap.reactions.get_by_id(r).metabolites)[0].id for r in nonConsReac]  # metabolites of exchange reactions where metabolites are non-consumed
+        nonConsMetb = set(nonConsMetb) - {BiomassMetbExtID}  # biomass has to be excluded from non-consumed (although it is not consumed) cause it is excreted (lb>0,ub>0, so lb is dif. from 0)
+        ls_override = {'produced': {BiomassMetbExtID}, 'non_consumed': nonConsMetb}  # produced is biomass boundary. it's same as optimize for biomass production reaction, as there is only one reaction that produces biomass in cytosol. No need to turn biomass boundary irreversible (biomass[s] -> ) as it is already done when adapting medium
+        # list of reactions to be removed according to reconstruction algorithm,
+        # excludes exchange reactions (to preserve adaptation to medium composition),
+        # excludes reactions essential for essential tasks in generic model, reactions related with biomass production/transport and reactions of task gapfill solution:
+        Id2Remove = list({id for id, bol in d.items() if not bol} - exg_rx_ids - set(protected) - set(EssRcTasks) - set(GapFillTasksReacIds))
+        # find model gapfill solution with EFM method if it can/if needed:
+        gapfillsol = gpfl_wrapper.run(avbl_fluxes=Id2Remove, ls_override=ls_override, algorithm='efm')  # model gapfill solution
+        if len(gapfillsol) != 0:  # if gapfillsol is not empty (if models needs gapfill to grow)
+            gapfillsol = gapfillsol[0]
+            RecModelGapReac['_'.join(modelID)] = gapfillsol
         # finally, reconstruct model with all info:
         reconstModel = modelMedAdap.copy()  # model to use for reconstruction
-        finalId2Remove = list(set(Id2Remove) - set(GapFillTasksReacIds)) # final reactions 2 remove: excludes boundaries, reac. for biomass, essential 4 tasks, model and task gapfill solution
+        finalId2Remove = list(set(Id2Remove) - set(gapfillsol)) # final reactions 2 remove: already excludes boundaries, reac. for biomass, essential 4 tasks in generic model, model and task gapfill solution
         for rid in finalId2Remove:  # remove final list of reactions to reconstruct model
             reconstModel.reactions.get_by_id(rid).knock_out()
         # test if reconstructed model produces biomass after adding task gapfill reactions:
@@ -276,45 +313,97 @@ def Reconst_taskEval(modelMedAdap, task_list, BiomassMetbExtID, BaseDir, protect
         for k in modelMedAdap.boundary:
             reconstModel.reactions.get_by_id(k.id).bounds = k.bounds
         # dictionary with samples as keys and as values recontructed models' final reaction bounds:
-        RecModelReacBds['_'.join(modelID)] = {r.id: reconstModel.reactions.get_by_id(r.id).bounds for r in reconstModel.reactions}
-    if not os.path.exists(os.path.join(Finalpath, StudyNumb)): # create dir if does not exist
-        os.makedirs(os.path.join(Finalpath, StudyNumb))
+            RecModelReacBds['_'.join(modelID)] = {r.id: reconstModel.reactions.get_by_id(r.id).bounds for r in reconstModel.reactions}
+    ftdir=os.path.join(Finalpath, StudyNumb, 'FailedTasks')
+    tgpdir=os.path.join(Finalpath, StudyNumb, 'TasksGapFillSol')
+    bdir=os.path.join(Finalpath, StudyNumb, 'RecModelBounds')
+    nosoldir=os.path.join(Finalpath, StudyNumb, 'ModelNoAlgmSol')
+    nogrowdir=os.path.join(Finalpath, StudyNumb, 'ModelNoGrowNoFeasibility')
+    mdpdir=os.path.join(Finalpath, StudyNumb, 'ModelGapFillSol')
+    if not os.path.exists(ftdir): # create dir if does not exist
+        os.makedirs(ftdir)
+    if not os.path.exists(tgpdir):
+        os.makedirs(tgpdir)
+    if not os.path.exists(bdir):
+        os.makedirs(bdir)
+    if not os.path.exists(nosoldir):
+        os.makedirs(nosoldir)
+    if not os.path.exists(nogrowdir):
+        os.makedirs(nogrowdir)
+    if not os.path.exists(mdpdir):
+        os.makedirs(mdpdir)
     # dataframe with models that failed tasks and info on which tasks were failed for those models:
-    pd.DataFrame.from_dict(FailedTasks).to_csv(os.path.join(Finalpath, StudyNumb, 'FailedTasks.tab'), sep='\t', index=False)
-    # dataframe with reactions added during model gapfill, for models that needed it:
-    pd.DataFrame({k: pd.Series(v) for k, v in RecModelGapReac.items()}).to_csv(os.path.join(Finalpath, StudyNumb, 'ModelGapFillSol.tab'), sep='\t', index=False)
+    pd.DataFrame.from_dict(FailedTasks).to_csv(os.path.join(ftdir, fname), sep='\t', index=False)
     # dataframe with reactions added during tasks' gapfill. when model did not require tasks gapfill, value is empty:
-    pd.DataFrame({k: pd.Series(v) for k, v in GapFillTasksReac.items()}).to_csv(os.path.join(Finalpath, StudyNumb, 'TasksGapFillSol.tab'), sep='\t', index=False)
+    pd.DataFrame({k: pd.Series(v) for k, v in GapFillTasksReac.items()}).to_csv(os.path.join(tgpdir, fname), sep='\t', index=False)
     # dataframe where rows are reactionIDs, columns are models' names, values are bounds of reconstructed and gapfilled models on specific medium:
     RecModelBounds = pd.DataFrame(RecModelReacBds)
-    RecModelBounds.to_csv(os.path.join(Finalpath, StudyNumb, 'RecModelBounds.tab'), sep='\t')
+    RecModelBounds.to_csv(os.path.join(bdir, fname), sep='\t')
     # dataframe with model names for which algorithm could not find a solution:
-    pd.DataFrame(NotReconst).to_csv(os.path.join(Finalpath, StudyNumb, 'ModelNoAlgmSol.tab'), sep='\t', index=False)
+    pd.DataFrame(NotReconst).to_csv(os.path.join(nosoldir, fname), sep='\t', index=False)
     # dataframe with feasibility status and objective value of models that could not produce biomass/or not be feasible after gapfill:
-    pd.DataFrame(NotProdBmss).to_csv(os.path.join(Finalpath, StudyNumb, 'ModelNoGrowNoFeasibility.tab'), sep='\t', index=False)
+    pd.DataFrame(NotProdBmss).to_csv(os.path.join(nogrowdir, fname), sep='\t', index=False)
+    # dataframe with reactions added during model gapfill, for models that needed it:
+    pd.DataFrame({k: pd.Series(v) for k, v in RecModelGapReac.items()}).to_csv(os.path.join(mdpdir, fname), sep='\t', index=False)
 
-def RcnstGapFill4ThrsEval (BaseDir, sample, StudyNumber, model, modelMedAdap, task_list, protected, BiomassMetbExtID):
+def RcnstThrsEval (BaseDir, StudyNumberR, StudyNumberM, model, i, path2MdNames, path2MdScores, pathDir, testThres, alg):
     '''
-    - Reconstruct models for thresholds+and/or rules combinations to test and gapfill for essential tasks and model growth
+    - Reconstruct models for thresholds+and/or rules combinations to test and for studies
     :param BaseDir: basic directory
-    :param sample: id of the cell line in our study that we want to test
-    :param StudyNumber: study number
     :param model: generic model Not adapted for medium composition
+    :param i: index to select one threshold/model to test from list of all those to test
+    :param path2MdNames: path to model names list
+    :param path2MdScores: path to model reaction scores list
+    :param pathDir: path to directory where to save results
+    :param testThres: boolean indicating whether to use function 'ReconstructionReac_ReacScores' to test thresholds or to build models for studies
+    :param alg: string can be 'both' (test both init and fastcore), 'init' or 'fastcore', or '' (when we do Not want to test thresholds)
+    '''
+    # load a list of thresholds to test and corresponding dicts with (reaction:reaction scores) of the sample for which we want to reconstruct models:
+    infile = open(path2MdNames, 'rb')
+    thrLst = pickle.load(infile)
+    infile.close()
+    infile2 = open(path2MdScores, 'rb')
+    rcLst = pickle.load(infile2)
+    infile2.close()
+    # select one threshold/model to test at a time (to be able to run one model in one job of the cluster):
+    thr = [thrLst[i]]
+    thrD = [rcLst[i]]
+    if not testThres: # if we want to build models for studies (no threshold testing)
+        if thr[0].startswith('R'):
+            thrsDf = pd.read_csv(os.path.join(BaseDir, 'support/LethalityEval/SimvsExpScore', StudyNumberR, 'CorrScores.tab'), sep='\t', index_col=0)
+            besthres = thrsDf.loc[thrsDf['value'].idxmax()].drop(['value', 'biomass_cutoff', 'essential_cutoff'])
+        else:
+            thrsDf = pd.read_csv(os.path.join(BaseDir, 'support/LethalityEval/SimvsExpScore', StudyNumberM, 'CorrScores.tab'), sep='\t', index_col=0)
+            besthres = thrsDf.loc[thrsDf['value'].idxmax()].drop(['value', 'biomass_cutoff', 'essential_cutoff'])
+        alg=besthres.algorithm # best algorithm for rnaseq studies
+        pathRc = os.path.join(pathDir, thr[0])
+    else:
+        pathRc = os.path.join(pathDir, '_'.join(thr[0]))
+    # get reactions to include/exclude from reconstructed models according to FASTCORE/INIT:
+    if not os.path.exists(pathDir):
+        os.makedirs(pathDir)
+    ReconstructionReac_ReacScores(model, labs=thr, iters=thrD, path=pathRc, alg=alg, testThres=testThres)
+
+def RcnstGapFill4ThrsEval (BaseDir, BiomassMetbExtID, StudyNumber, modelMedAdap, task_list, protected, Intpath, Finalpath, testThres, fname):
+    '''
+    - Reconstruct models for and gapfill for essential tasks and model growth
+    :param BaseDir: basic directory
+    :param BiomassMetbExtID: id of biomass metabolite in external compartment
+    :param StudyNumber: study number
     :param modelMedAdap: model adapted for specific medium composition (exchange reaction of medium metabolites are open and remaining have bounds LB=0, UB=1000)
     :param task_list: list of tasks to test
     :param protected: reactions related with biomass production and exchange/transport to in/out of cell
-    :param BiomassMetbExtID: id of biomass metabolite in external compartment
+    :param Intpath: path to directory constaining files. each file represents one sample/threshold and has "True/False" indicating if reactions are to be kept or not
+    :param Finalpath: path to directory where to save results
+    :param testThres: boolean indicating whether models to reconstruct are for threshold testing or not
+    :param fname: name of file with reconst. alg. output
     '''
-    # get a list of thresholds to test and corresponding dicts with (reaction:reaction scores) of the sample for which we want to reconstruct models:
-    thrLst, rcLst = ThrsRcScores4aSample(BaseDir, sample, model)
-    # get reactions to include/exclude from reconstructed models according to FASTCORE/INIT:
-    pathRcnstRc = os.path.join(BaseDir, 'support/LethalityEval/Reac4Reconst', (StudyNumber + 'reconstReac.csv'))
-    ReconstructionReac_ReacScores(model, thrLst, rcLst, pathRcnstRc, alg='both', testThres=True)
-    # gapfill reconstructed models with "EFM" method and gapfill for tasks using cobrapy gapfill:
-    Finalpath = os.path.join(BaseDir, 'support/LethalityEval/GapFillRes')
-    BoolDict = pd.read_csv(pathRcnstRc, header=0, index_col=[0, 1, 2]).T.to_dict()  # dict where key is ('algorithm', 'threshold', 'And/Or function') and value another dict with (reactID: True/False)
-    Reconst_taskEval(modelMedAdap, task_list, BiomassMetbExtID, BaseDir, protected, Finalpath, BoolDict, StudyNumber)
-
+    # reconstruct models, gapfill reconstructed models with "EFM" method, and gapfill for tasks using cobrapy gapfill:
+    if testThres: # if reconstructed models are for threshold testing
+        BoolDict = pd.read_csv(Intpath, header=0, index_col=[0, 1, 2]).T.to_dict() # dict will have models/thresholds as keys and inner dictionary has reaction ids as keys and "true/false" as values
+    else: # if reconstructed models are not for threshold testing
+        BoolDict = pd.read_csv(Intpath, header=0, index_col=[0, 1]).T.to_dict()
+    Reconst_taskEval(modelMedAdap, task_list, BaseDir, BiomassMetbExtID, protected, Finalpath, BoolDict, StudyNumb=StudyNumber, fname=fname)
 
 def ProcessExpLethalityScoresDf(LethalCellLinePath, modelMedAdap):
     '''
@@ -344,7 +433,7 @@ def ProcessExpLethalityScoresDf(LethalCellLinePath, modelMedAdap):
     # convert entrez to ensembl:
     conv_dict = mapping.get_id_table(ach_mset.column_names, 'entrez_id').set_index('entrez_id')['ensembl_gene_id'].to_dict() # dict where achiles entrez gene ids are keys and corresponding ensembl gene ids are values
     ach_mset.column_names = [conv_dict[k] if k in conv_dict else np.nan for k in ach_mset.column_names] # keep only ensembl gene ids, when convertion from entrez didn't work it was put as nan - conversion
-    # drops columns corresponding to genes not in metabolic model
+    # drops columns corresponding to genes not in metabolic model:
     ach_mset.drop(columns=ach_mset.data.columns[~ach_mset.data.columns.isin(model_genes)]) # '~' symbol turns Trues to Falses
     ach_mset.transform(lambda x: x.fillna(0)) # each nan value in achiles dataframe is replaced by 0
     return ach_mset, cobamp_model, model_genes
@@ -389,19 +478,24 @@ def InactReactFromGeneKo(cobamp_model, model_genes):
     # kos_to_test is a list of combination of reactions that are inactive, depending on which gene is knockout
     return kos_to_test, reaction_states_inactive
 
-def batch_ko_optimize(model, kos, context, objective, objective_sense, threads):
+def batch_ko_optimize(model, kos, context, objective, objective_sense, threads, EssMtb=False):
     '''
     - list where each element represent a comb of reaction kos corresponding to one gene ko, containing simulated lethality scores
+      or
+      list where each element represent a comb of reaction which bounds change when one metabolite is ko, containing simulated lethality scores
     :param model: generic model adapted for medium composition in cobamp format
     :param kos: list of combination of reactions that are ko when a gene is ko
+                or
+                list of combination of (reaction, reaction lb, reaction up) which bounds change when a metabolite is knockout
     :param context: dict of (LB,UB) reactions of a reconstructed model
     :param objective: coefficient of model objective
     :param objective_sense: if False, means to maximize the objective
     :param threads: maximum threads available
-    :return: - list where each element represent a comb of reaction kos.
-               * if ko is essential (gives infeasible model, or model that doesn't grow) value is 0
-               * if ko gives positive objective, value is objective value after ko divided by objective value before ko:
-                 in that case if value is below 1 means biomass decreased with ko and ko affects biomass, although not essential
+    :param EssMtb: boolean indicating whether to work with lethal metabolites or not (to work with lethal genes)
+    :return: - list where each element represent a comb of reaction kos or of reactions which bounds change.
+               * if ko/bounds change is essential (gives infeasible model, or model that doesn't grow) value is 0
+               * if ko/bounds change gives positive objective, value is objective value after ko/ bounds change divided by objective value before ko/bound change:
+                 in that case if value is below 1 means biomass decreased with ko and ko affects biomass, although not necessaily essential
     '''
     with model as m:
         for crx, Bd in context.items():
@@ -410,17 +504,22 @@ def batch_ko_optimize(model, kos, context, objective, objective_sense, threads):
         sol = m.optimize(objective, objective_sense)
         ofv = sol.objective_value()
         if sol.status() == 'optimal' and ofv > 0:
-            # list of dicts where each dict corresponds to set of reactions ko when a gene is ko
-            # dic is reactionIndex of reaction to ko as keys and (0,0) as values:
-            gko_to_rko = [{model.decode_index(rko, 'reaction'): (0, 0) for rko in ko_set} for ko_set in kos] # ko_set is comb of reactions that are ko when a gene is ko
+            if EssMtb:
+                # list of dicts where each dict corresponds to set of reactions which bounds have to be change when a metabolite is ko
+                # dic is reactionIndex of reaction vs bounds to change to:
+                gko_to_rko = [{model.decode_index(rko[0], 'reaction'): (rko[1], rko[2]) for rko in ko_set} for ko_set in kos]  # ko_set is comb of reactions which bounds are to changed when a metabolite is ko
+            else:
+                # list of dicts where each dict corresponds to set of reactions ko when a gene is ko
+                # dic is reactionIndex of reaction to ko as keys and (0,0) as values:
+                gko_to_rko = [{model.decode_index(rko, 'reaction'): (0, 0) for rko in ko_set} for ko_set in kos] # ko_set is comb of reactions that are ko when a gene is ko
             # create model object:
             bopt = BatchOptimizer(m.model, threads=int(min(len(gko_to_rko), threads, MP_THREADS)))
-            # simulates several models for the same reconstructed model (1 threshold comb) where one gene is ko at each time:
+            # simulates several models for the same reconstructed model (1 threshold comb) where one gene/metabolite is ko at each time:
             opt_result = bopt.batch_optimize(gko_to_rko, [{model.decode_index(rko, 'reaction'): v for rko, v in objective.items()}] * len(gko_to_rko), [objective_sense] * len(gko_to_rko))
                 # objective = {'biomass_human': 1}, '1' is coef of objective
                 # objective_sense is False, which means to optimize
-                # opt_result - list of 'optimize' solutions - for each of reaction/reaction combinations kos
-            return [k.objective_value() / ofv if (k.status() == 'optimal') and ofv > 0 else 0 for k in opt_result]
+                # opt_result - list of 'optimize' solutions - for each of reaction/reaction combinations
+            return [k.objective_value() / ofv if (k.status() == 'optimal') and ofv > 0 else 0 for k in opt_result] # if infeasible, model can't get a steady-state distribution, so ko is lethal
         else:
             print('\tReconstructed model objective is 0... skipping')
             return []
@@ -437,20 +536,20 @@ def CorrValue(BaseDir, StudyNumber, cobamp_model, kos_to_test, reaction_states_i
     :param LethalityCellLine: id of cell line in lethality experimental data
     :return corr_coef_dict: dict where key is threshold combination and value is a dataframe with experimental and simulation scores for each model
     '''
-    model_df_path = os.path.join(BaseDir, 'support/LethalityEval/GapFillRes', StudyNumber, 'RecModelBounds.tab')
-    # get dataframe with thresholds comb in rows, reactions in columns and values are
-    # '(LB,UB)' : representing lower and upper bounds of active/inactive reactions in the gapfilled reconstructed model
-    model_df = pd.read_csv(model_df_path, sep='\t').T
-    model_df.columns = model_df.iloc[0]
-    model_df.drop(model_df.index[0], inplace=True)
+    dirpath = os.path.join(BaseDir, 'support/LethalityEval/GapFillRes', StudyNumber, 'RecModelBounds')
     # create dict where key is threshold combination and value is dict
     # inner dict has reaction as key and (LB,UB) as value:
-    model_dicts = model_df.T.to_dict()
+    model_dicts= dict()
+    for file in os.listdir(dirpath):
+        df = pd.read_csv(os.path.join(dirpath, file), sep='\t')
+        if not df.empty:
+            df = df.T
+            df.columns = df.iloc[0]
+            df = df.drop(df.index[0]).T
+            model_dicts.update(df.to_dict())
     # rebuild reconsructed models and ko combinations of inactive reactions:
     corr_coef_dict = {}
     for mkey, mdict in model_dicts.items():  # for each threshold combination/model
-        # mkey = 'fastcore_MetbGenes_local1B_0_nan_3.0_minsum'
-        # mdict = model_dicts[mkey]
         print(mkey)
         context_dict = {k: v for k, v in mdict.items()} # make a copy of dict with reaction as key and (LB,UB) as value
         NTHREADS = cpu_count() - cpu_count()/4
@@ -458,7 +557,8 @@ def CorrValue(BaseDir, StudyNumber, cobamp_model, kos_to_test, reaction_states_i
         # create dict where key is comb of reactions ko and value is score representing if that combination was essential (0) or affected biomass (<1) or not (>=1):
         opt_res = dict(zip(kos_to_test, bkopt))
         # create dict where key is gene ko and value is score representing if was essential (0) or affected biomass (<1) or not (>=1):
-        of_res = {k: opt_res[v] if v in opt_res.keys() else 1 for k, v in reaction_states_inactive.items()} # if else condition  guarantees that genes
+        of_res = {k: opt_res[v] if v in opt_res.keys() else 1 for k, v in reaction_states_inactive.items()}
+        # if else condition  guarantees that genes
         # which don't have associated inactive reaction when ko get a score of 1 - meaning they don't affect biomass
         # create dataframe where:
         # 1st col is experimental score centered on zero, where negative values are lethal genes
@@ -511,7 +611,10 @@ def CorrExpSimulatedEssentialGenes(LethalCellLinePath, modelMedAdap, BaseDir, St
     # apply best comb of cutoffs:
     finaldf = score_df_melt[score_df_melt['essential_cutoff'] == bestCutOffsInd[0]]
     finaldf = finaldf[finaldf['biomass_cutoff'] == bestCutOffsInd[1]]
-    finaldf.to_csv(os.path.join(BaseDir, 'support/LethalityEval/SimvsExpScore', StudyNumber, 'CorrScores.tab'), sep='\t', header=True)
+    fnd = os.path.join(BaseDir, 'support/LethalityEval/SimvsExpScore', StudyNumber)
+    if not os.path.exists(fnd):
+        os.makedirs(fnd)
+    finaldf.to_csv(os.path.join(fnd, 'CorrScores.tab'), sep='\t', header=True)
     besthres = finaldf.loc[finaldf['value'].idxmax()]
     quantiles = [0.1, 0.25, 0.5, 0.75, 0.9]
     quantiles = list(map(str, quantiles))
@@ -528,7 +631,6 @@ def CorrExpSimulatedEssentialGenes(LethalCellLinePath, modelMedAdap, BaseDir, St
     else:
         lc = quantiles[int(float(besthres.local))]
     print('study:' + StudyNumber, 'strategy:' + besthres.thres, 'globalmin:' + gbmin, 'globalmax:' + gbmax, 'local:' + lc, 'GPR_rules:'+ besthres.int_function, 'algorithm:'+ besthres.algorithm, 'genes:'+besthres.Genes)
-    return finaldf
 
 
 

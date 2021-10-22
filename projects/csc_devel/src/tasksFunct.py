@@ -2,27 +2,26 @@
 import os
 import pandas as pd
 import numpy as np
+import json5
+import copy
 from troppo.tasks.task_io import JSONTaskIO
-from troppo.tasks.core import Task, TaskEvaluator
 from cobamp.utilities.parallel import batch_run
-from multiprocessing.dummy import Pool
-from multiprocessing import cpu_count
-from functools import partial
-from scaleGenExpFunct import saveResult
 from cobra import Reaction, flux_analysis
+from troppo.tasks.core import Task, TaskEvaluator
 
 ### Functions:
-def ConvertExcelTasks2Json(TasksExcelPath, TasksJsonPath):
+def ConvertExcelTasks2Json(TasksExcelPath):
     '''
     - convert tasks in excell format to appropriate troppo tasks object format in Json file
     :param TasksExcelPath: path to tasks' file in .xlsx format
-    :param TasksJsonPath: path to .json file where to save/get tasks
     :return: saves .json file with tasks
     '''
     TasksLst = list()
     ## For each task (row in tasks table)
-    metbTasks = pd.read_excel(TasksExcelPath)
+    metbTasks = pd.read_excel(TasksExcelPath).dropna(subset=['task'])
+    metbTasks['task'] = metbTasks['task'].apply(int)
     for k in range(metbTasks.shape[0]):
+        print(k)
         TaskInfo = metbTasks.iloc[k, :]  # extract info on the task
         TaskName = str(TaskInfo.loc['task'])
         inflowMet = str(TaskInfo.loc['inputIds']).split(', ') # inflow metabolites
@@ -80,17 +79,16 @@ def ConvertExcelTasks2Json(TasksExcelPath, TasksJsonPath):
             annotations = {'subsystem': str(TaskInfo.loc['subsystem']), 'system': str(TaskInfo.loc['system']),
             'id': str(TaskInfo.loc['task']), 'description': str(TaskInfo.loc['description'])})
         TasksLst.append(task)
-    JSONTaskIO().write_task(TasksJsonPath, TasksLst)
+    return TasksLst
 
-def preprocessTasks(TasksJsonPath, model):
+def preprocessTasks(tasks, model):
     '''
     - process tasks: exclude tasks with metabolites not present in generic model adapted for medium composition;
                      and deal with task metabolites that enter and go out of system at same time
-    :param TasksJsonPath: path to .json file with tasks
+    :param tasks: list with tasks
     :param model: generic model adapted for medium composition
     :return task_list: processed tasks
     '''
-    tasks = JSONTaskIO().read_task(TasksJsonPath)
     # if a task's metabolites are not in the generic model with medium adapted, exclude task:
     task_list = [t for t in tasks if len((set(t.inflow_dict) | set(t.outflow_dict)) - set([m.id for m in model.metabolites])) == 0]
     # if a task's metabolite is both entering and going out of model, then bounds are set to (-1000, 1000) and it is just kept in the list of 'inflow' metabolites:
@@ -100,13 +98,13 @@ def preprocessTasks(TasksJsonPath, model):
         #task.mandatory_activity = [] # and mandatory_activity (list of reactions that should have flux when doing that task) is set to [].cause we are not interested in using this
     return task_list
 
-def RemoveFailedTasks(tasksName, batch_res_tasks, task_list, TasksJsonPath):
+def RemoveFailedTasks(tasksName, batch_res_tasks, task_list, tasksDir):
     '''
     - remove tasks failed in generic model from list of tasks to test in reconstructed models
     :param tasksName: tasks' names
     :param batch_res_tasks: info on whether task fails (False) or not
     :param task_list: list of tasks
-    :param TasksJsonPath: path to .json file with tasks (used to retrieve tasks directory)
+    :param tasksDir: path to directory where to save outup files
     :return task_listNew: list of tasks without those that failed on generic model although should not fail (should_fail=False)
     '''
     # get tasksName and batch_res_tasks tasks ordered as task_list (from task 1 to end):
@@ -119,7 +117,6 @@ def RemoveFailedTasks(tasksName, batch_res_tasks, task_list, TasksJsonPath):
             print('Task ' + taskN + ' failed on generic model. It will not be tested on reconstructed models')
             tasksFailed.append(taskN)
     task_listNew = [el for el in task_list if el.name not in tasksFailed]
-    tasksDir = '/'.join(TasksJsonPath.split('/')[:len(TasksJsonPath.split('/'))-1])
     pd.Series(tasksFailed).to_csv(tasksDir + '/GenericModelFailedTasks.tab', sep='\t', index=False, header=False)  # saves failed tasks into a file
     return task_listNew
 
@@ -148,123 +145,19 @@ def TestTasksUniversalModel(TasksExcelPath, TasksJsonPath, model):
     '''
     if not os.path.exists(TasksJsonPath):
         ## convert tasks in excell format to appropriate format in Json file
-        ConvertExcelTasks2Json(TasksExcelPath, TasksJsonPath)
-    ## preprocess tasks:
-    taskModel = model.copy()
-    # close opened boundary reactions of the model to evaluate tasks:
-    for k in taskModel.boundary:
-        k.knock_out()
-    task_list = preprocessTasks(TasksJsonPath, taskModel)
-    # evaluate tasks on generic model:
-    tasksName, batch_res_tasks = EvalAllTasksAtSameTime(taskModel, task_list)
-    # failed tasks on universal model will be removed from list of tasks to test in reconstructed model:
-    task_list = RemoveFailedTasks(tasksName, batch_res_tasks, task_list, TasksJsonPath)
-    return task_list
-
-'''
-def EssTaskRcFct(model, task_list, path):
-    
-    - saves a .pkl object with list of reactions that are essential for tasks performed in a given model
-    :param model: where tasks are performed
-    :param task_list: list of tasks to perform
-    :param path: path to pickle file where to save results
-   
-    taskModel = modelMedAdap.copy()
-    EssTaskRcLst = list()
-    for r in taskModel.boundary:
-        r.knock_out()
-    r2nk = set(taskModel.reactions) - set(taskModel.boundary)
-    for r in r2nk:
-        print(r.id)
-        rb = r.bounds
-        print(taskModel.reactions.get_by_id(r.id).bounds)
-        r.knock_out()
-        print(taskModel.reactions.get_by_id(r.id).bounds)
+        tasks = ConvertExcelTasks2Json(TasksExcelPath)
+        ## preprocess tasks:
+        taskModel = model.copy()
+        # close opened boundary reactions of the model to evaluate tasks:
+        for k in taskModel.boundary:
+            k.knock_out()
+        task_list = preprocessTasks(tasks, taskModel)
+        # evaluate tasks on generic model:
         tasksName, batch_res_tasks = EvalAllTasksAtSameTime(taskModel, task_list)
-        for taskN, task in zip(tasksName, batch_res_tasks):  # checks which tasks fail
-            if not task[0]:
-                EssTaskRcLst.append(r.id)
-                break
-        r.bounds = rb
-        print(taskModel.reactions.get_by_id(r.id).bounds)
-'''
-def EssTaskRcFct(model, task_list, path, BaseDir):
-    '''
-    - Identify/saves reactions in generic model that if excluded cause one or more of the essential tasks to fail
-    :param model: generic model may be adapted or not for medium composition)
-    :param task_list: list of tasks to test
-    :param path: path to file with results
-    '''
-    # function that given a rid does knockout (ko) to corresponding reaction and checks whether that ko is essential for at least one task:
-    def EvalTasksReacKo(rid, model, task_list):
-        print(rid)
-        md = model.copy() # to be able to to ko to one reaction at a time while using multiprocessing
-        md.reactions.get_by_id(rid).knock_out()
-        tasksName, batch_res_tasks = EvalAllTasksAtSameTime(taskModel, task_list)
-        for taskN, task in zip(tasksName, batch_res_tasks):  # checks which tasks fail
-            if not task[0]:
-                print('end', rid)
-                return rid, True
-        else:
-            print('end', rid)
-            return rid, False
-    # close model exchange/boundary reactions (in "human1" all boundaries are exchange reactions):
-    taskModel = model.copy()
-    for r in taskModel.boundary:
-        r.knock_out()
-    # get all reactions of generic model except boundaries/exchange reactions:
-    rids = {r.id for r in taskModel.reactions}
-    bdrids = {r.id for r in taskModel.boundary}
-    frids = list(rids - bdrids)
-    grps = 30
-    integ = len(frids)//grps
-    remain = len(frids)%grps
-    intv = grps*[integ] + [remain]
-    i = 0
-    for v in intv:
-        print(i)
-        f = i + v
-        pd.Series(frids[i:f]).to_csv(os.path.join(BaseDir, 'support/LethalityEval/EssLst' + str(i)), index=False)
-        i = i + v
-    TasksReacKoLst = list()
-    fileLst = os.listdir(os.path.join(BaseDir, 'support/LethalityEval/EssRcKo'))
-    for file in fileLst:
-        rs = pd.read_csv(os.path.join(BaseDir, 'support/LethalityEval/EssRcKo', file)).iloc[:,0].tolist()
-        TasksReacKoLst = TasksReacKoLst + rs
-    len(TasksReacKoLst)
-    pd.Series(TasksReacKoLst).to_csv(path, sep='\t', index=False, header= False)
-    # use multiprocessing to make faster the evaluation of each reaction ko:
-    pool = Pool(processes=int(cpu_count() - (cpu_count()/4)))
-    fc = partial(EvalTasksReacKo, model=taskModel, task_list=task_list)
-    results = pool.map(fc, frids)
-    pool.close()
-    pool.join()
-    # save reactions essential to at least one task into a list:
-    TasksReacKoLst = list()
-    for rid, bool in results:
-        if bool:
-            TasksReacKoLst.append(rid)
-    pd.Series(TasksReacKoLst).to_csv(path, sep='\t', index=False)
-'''
-
-11:42 - 59
-23seg * 10400=239200
-239200 / 60 /60 =66 horas... 3 dias...
-    def EvalTasksReacKo(rid, model, task_list):
-        print(rid)
-        md = model.copy() # to be able to to ko to one reaction at a time while using multiprocessing
-        md.reactions.get_by_id(rid).knock_out()
-        tasksEval = TaskEvaluator(model=md, tasks=task_list, solver='CPLEX')  # create a task evaluator instance
-        for tsk in task_list:
-            tn = tsk.name # get task name
-            tasksEval.current_task = tn # set task to evaluate
-            taskres = tasksEval.evaluate()[0] # evaluate task
-            tasksEval.current_task = None  # remove current task from evaluation - back to normal
-            if not taskres: # if task fails, append rcid to list and move to next reaction
-                return rid, True
-        else:
-            return rid, False
-        '''
+        # failed tasks on universal model will be removed from list of tasks to test in reconstructed model:
+        tasksDir = '/'.join(TasksJsonPath.split('/')[:len(TasksJsonPath.split('/'))-1])
+        task_list = RemoveFailedTasks(tasksName, batch_res_tasks, task_list, tasksDir)
+        JSONTaskIO().write_task(TasksJsonPath, task_list)
 
 def AddTaskCobrapy(tasksDic, UnivModel, IncompModel, Tname):
     '''
@@ -333,6 +226,109 @@ def TaskGapfill(UnivModel, IncompModel):
     gapfillTasksolIds = [reac.id for reac in gapfillTasksol]
     return gapfillTasksolIds
 
+def EssTaskRcFct(path, BaseDir):
+    '''
+    - saves all reactions in generic model that if excluded cause one or more of the essential tasks to fail
+    Note: prior to run this function, 'prepare4cluster.py' script has to be run and 'submitJobsEssRcKo.sh' has to be run on a cluster
+    :param BaseDir: basic directory
+    :param path: path to file with results
+    '''
+    TasksReacKoLst = list()
+    fileLst = os.listdir(os.path.join(BaseDir, 'support/LethalityEval/EssRcKo'))
+    for file in fileLst:
+        rs = pd.read_csv(os.path.join(BaseDir, 'support/LethalityEval/EssRcKo', file)).iloc[:,0].tolist()
+        TasksReacKoLst = TasksReacKoLst + rs
+    pd.Series(TasksReacKoLst).to_csv(path, sep='\t', index=False, header= False)
+
+### Functions:
+def EvalTasksReacKo(rid, md, task_list):
+    '''
+    - knock out (ko) to a given reaction and if any task fails returns True, otherwise returns False
+    :param rid: id of reaction to knock out
+    :param md: model provided
+    :param task_list: list of tasks to test
+    '''
+    r = md.reactions.get_by_id(rid)
+    bd = r.bounds
+    r.knock_out()
+    tasksEval = TaskEvaluator(model=md, tasks=task_list, solver='CPLEX')  # create a task evaluator instance
+    for tsk in task_list:
+        tn = tsk.name # get task name
+        tasksEval.current_task = tn # set task to evaluate
+        taskres = tasksEval.evaluate()[0] # evaluate task
+        tasksEval.current_task = None  # remove current task from evaluation - back to normal
+        if not taskres: # if task fails, append rcid to list and move to next reaction
+            r.bounds = bd
+            return rid, True
+    else:
+        r.bounds = bd
+        return rid, False
+
+def ConvertTasksRecon2Human1(TJsonPath, MetAssPath, finalpath, model):
+    '''
+    - convert tasks with metabolite ids of recon3d to tasks with metabolite ids of human1,
+      also excludes tasks not working on generic model from list of tasks to test
+    :param TJsonPath: path to.json file with tasks from recon3d (consensus) list
+    :param MetAssPath: path to.json file with association between recon3d and human1 metabolites' ids
+    :param finalpath: path to json file that contains the result, a list of tasks that can be tested on human1 model
+    :param model: generic metabolic model
+    '''
+    ## get tasks with metabolite ids in recon3d format:
+    tasks = JSONTaskIO().read_task(TJsonPath)
+    ## get dataframe with association between metabolites ids in recon3d and ihuman and compartments:
+    with open(MetAssPath) as json_file:
+        metbass = json5.load(json_file)
+    df = pd.concat([pd.Series(metbass['mets']), pd.Series(metbass['metRecon3DID'])], axis=1)
+    df.columns = ['Human1', 'Recon3D']
+    df['Compartment'] = df['Human1'].apply(lambda x: x[-1])
+    ## exclude tasks with metabolites that do not exist in human1:
+    t2Remove = list()
+    for t in tasks:
+        INB = [True for im, v in t.inflow_dict.items() if im[:-3] not in list(df['Recon3D'])]  # get True if not all IN metabolites can be converted to iHuman ID
+        OUTB = [True for im, v in t.outflow_dict.items() if im[:-3] not in list(df['Recon3D'])]  # get True if not all OUT metabolites can be converted to iHuman ID
+        if len(INB) != 0 or len(OUTB) != 0:
+            t2Remove.append(t.name)
+    tasks = [t for t in tasks if t.name not in t2Remove]  # remove tasks
+    ## replace ids of metabolites from recon3d to human1:
+    # note: all tasks to test have reaction_dict empty: [t.name for t in tasks if len(t.reaction_dict) != 0] is []
+    Mt2Remove = list()
+    tasksInD = dict()
+    tasksOutD = dict()
+    for t in tasks:
+        inDct = {''.join([im[:-2], 's]']) if (im[-2] == 'x' or im[-2] == 'e') else im: v for im, v in t.inflow_dict.items()}  # replace x and e compartments by s (both correspond to extracellular comp in human1)
+        outDct = {''.join([im[:-2], 's]']) if (im[-2] == 'x' or im[-2] == 'e') else im: v for im, v in t.outflow_dict.items()}  # replace x and e compartments by s (both correspond to extracellular comp in human1)
+        inD = dict()
+        outD = dict()
+        for im, v in inDct.items():  # for inflow metabolites
+            if len(df[(df['Recon3D'] == im[:-3]) & (df['Compartment'] == im[-2])]) == 0:  # if combination of metabolite id + compartment do not exist in human1
+                Mt2Remove.append(t.name)  # append task, to latter on remove it
+            else:  # else, replace recon3d metabolite id by id in human1
+                inD[df[(df['Recon3D'] == im[:-3]) & (df['Compartment'] == im[-2])]['Human1'].iloc[0]] = v
+        for im, v in outDct.items():  # for outflow metabolites
+            if len(df[(df['Recon3D'] == im[:-3]) & (df['Compartment'] == im[-2])]) == 0:  # if combination of metabolite id + compartment do not exist in human1
+                Mt2Remove.append(t.name)  # append task, to latter on remove it
+            else:  # else, replace recon3d metabolite id by id in human1
+                outD[df[(df['Recon3D'] == im[:-3]) & (df['Compartment'] == im[-2])]['Human1'].iloc[0]] = v
+        tasksInD[t.name] = inD
+        tasksOutD[t.name] = outD
+    tasks = [t for t in tasks if t.name not in set(Mt2Remove)]  # remove reactions with combination of metabolite id + compartment that do not exist in human1
+    tasksN = copy.deepcopy(tasks)
+    for t in tasksN:
+        t.inflow_dict = tasksInD[t.name]
+        t.outflow_dict = tasksOutD[t.name]
+        t.mandatory_activity = [] # mandatory activity is specific reactions that are required to have flux. But it is not necessary to test the task
+    ## preprocess tasks:
+    taskModel = model.copy()
+    # close opened boundary reactions of the model to evaluate tasks:
+    for k in taskModel.boundary:
+        k.knock_out()
+    task_list = preprocessTasks(tasksN, taskModel)
+    # evaluate tasks on generic model:
+    tasksName, batch_res_tasks = EvalAllTasksAtSameTime(taskModel, task_list)
+    # failed tasks on universal model will be removed from list of tasks to test in reconstructed model:
+    tasksDir = '/'.join(finalpath.split('/')[:len(finalpath.split('/')) -1])
+    task_list = RemoveFailedTasks(tasksName, batch_res_tasks, task_list, tasksDir)
+    JSONTaskIO().write_task(os.path.join(tasksDir, 'processedTasks.json'), task_list)
 
 
 

@@ -5,7 +5,7 @@ import cobra
 from collections import OrderedDict
 import re
 from cobra.io import read_sbml_model
-from medium import findExtraMediumMetabolites, AdjustExReac
+from medium import AdjustExReac
 
 ### Functions:
 def createiHumanInfo (model, modelInfoPath):
@@ -48,20 +48,16 @@ def createiHumanInfo (model, modelInfoPath):
     genes.to_excel(writer, sheet_name='GENES', index=False) # create tab with genes info
     writer.save()
 
-def preprocessiHuman(modelPathSBML, modelProcPath, modelProcInfoPath, modelMedAdapPath, modelInfoPath, HamsPath, BaseMediumPath, MediumPath, BiomassID):
+def preprocessiHuman(modelPathSBML, modelProcPath, modelProcInfoPath, modelMedAdapPath, modelInfoPath, MediumPath, BiomassID):
     '''
     - saves info (reactions, genes, metabolites) on generic model, pre-processed model and model adapted for medium composition on .xlsx files
-    - identifies metabolites (from HAMs medium) that have to be added to tested medium for generic model to grow and adds them
     - removes blocked reactions, except those that are exchange reactions related with medium metabolites
     - gives model adapted for medium composition
     :param modelPathSBML: link to where generic iHuman(human1) model is
     :param modelProcPath: path to pre-processed metabolic model
-    :param modelProcInfoPath: path to file with info on pre-processed metabolic model
     :param modelMedAdapPath: path to metabolic model adapted for medium composition
     :param modelInfoPath: path to file with info on generic model
-    :param HamsPath: path to file with HAMs medium composition
-    :param BaseMediumPath: path to file with medium composition we want the model to be adapted to
-    :param MediumPath: path to output file with medium composition to be tested plus extra metabolites from HAMs medium (needed for model to grow)
+    :param MediumPath: path to output file with medium composition to be tested
     :param BiomassID: id of biomass reaction
     :return: returns generic model and model adapted for medium composition; and saves pre-processed/medium adapted/generic model info
     '''
@@ -69,12 +65,11 @@ def preprocessiHuman(modelPathSBML, modelProcPath, modelProcInfoPath, modelMedAd
         model = read_sbml_model(modelPathSBML) # load model in SBML format cause .mat format does not have boundaries
         model.objective = BiomassID # define biomass production as objective
         createiHumanInfo(model, modelInfoPath)
-        findExtraMediumMetabolites(model, HamsPath, BaseMediumPath, MediumPath)  # when univ. model doesn't grow on defined medium, adds extra metabolites from ham's media
         MedReac = set(pd.read_excel(MediumPath).Reaction_ID)  # boundaries for medium components
         blocked_reactions = cobra.flux_analysis.variability.find_blocked_reactions(model) # identify blocked reactions
         Toremove = list(set(blocked_reactions) - MedReac)
         model.remove_reactions(Toremove, remove_orphans=True) # remove blocked reactions except boundaries for medium components
-        createiHumanInfo(model, modelProcInfoPath) # save info on processed model to a xlsx
+        createiHumanInfo(model, modelProcInfoPath)  # save info on processed model to a xlsx
         cobra.io.write_sbml_model(model, modelProcPath)
         # close input drains except those of medium - which have specific bounds:
         modelMedAdap = model.copy()
@@ -87,3 +82,4 @@ def preprocessiHuman(modelPathSBML, modelProcPath, modelProcInfoPath, modelMedAd
         model = cobra.io.read_sbml_model(modelProcPath)
         modelMedAdap = cobra.io.read_sbml_model(modelMedAdapPath)
     return model, modelMedAdap
+

@@ -21,6 +21,7 @@ def AddMediumBounds(MediumBoundsPath, model):
     :return: model with flux constrains on exchange reactions of a medium
     '''
     MediumBoundsTable = pd.read_excel(MediumBoundsPath)
+    MediumBoundsTable = MediumBoundsTable.dropna(subset=['Reaction_ID'])
     MediumBoundsDic = MediumBoundsTable.set_index('Reaction_ID').T.to_dict()
     for k, v in MediumBoundsDic.items():
         LB = float(v['Lower_bound'])

@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b9f748eb-a9d0-480b-ad45-a1fca7ec55fb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/data/MetModels/iHuman/iHuman_MedAdap.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/data/MetModels/iHuman/iHuman_processed.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/data/MetModels/iHuman/iHuman_processedInfo.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Essentiality/AntMtb_inCSCinCC.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Essentiality/AntMtb_inCSCnotCC.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Essentiality/PtEssGenesRec.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Essentiality/PtEssMtbRec.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/MetbTasks/allMdsTasksRes.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M13.2.11.CCs_UT33" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M13.2.11.CSCs_UT33" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M2.2.13.CCs_Hep3B" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M2.2.13.CCs_Huh7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M2.2.13.CSCs_Hep3B" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M2.2.13.CSCs_Huh7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M6.3.14.CCs_1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M6.3.14.CSCs_1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M8.2.3.CCs_1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M8.2.3.CCs_2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M8.2.3.CCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M8.2.3.CSCs_1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M8.2.3.CSCs_2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M8.2.3.CSCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M9.1.4.CCs_1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M9.1.4.CCs_2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M9.1.4.CCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M9.1.4.CSCs_1_CXCR4+MET+CD44+" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M9.1.4.CSCs_2_CXCR4+MET+CD44+" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/M9.1.4.CSCs_3_CXCR4+MET+CD44+" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R1.1.1.CCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R1.1.1.CSCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R1.1.1.NCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R1.1.1.SCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R11.1.4.CCs_NCIH1703" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R11.1.4.CSCs_NCIH1703" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R12.5.4.CCs_2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R12.5.4.CCs_5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R12.5.4.CSCs_2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R12.5.4.CSCs_5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R4.10.2.CCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R4.10.2.CSCs_3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R5.8.2.TN.CCs_HCC1937" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R5.8.2.TN.CCs_SUM149PT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R5.8.2.TN.CSCs_HCC1937" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/FVA/R5.8.2.TN.CSCs_SUM149PT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/results/Simulations/pFBA.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/EssRcKo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/EssRcKo.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/GapfillCluster.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/GapfillCluster.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/LethalityEvalA.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/LethalityEvalB.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/LethalityEvalCluster.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/LethalityEvalCluster.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/ReconstStdCluster.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/ReconstStdCluster.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/StdGapfill.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/StdGapfill.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/reconstAllStudA.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/splitReac.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/statsAndSimA.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/statsAndSimB.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/submitJobsEssRcKo.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/submitJobsGapfillCluster.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/submitJobsLethality.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/submitJobsReconst.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/submitJobsStdGapfill.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/src/BuildPaths.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/src/CorrFunct.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/src/EssTasksGenesMetbFunct.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/src/paths.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/src/statsAndSimFunct.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/SimvsExpScore/M2.2.13/CorrScores.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/SimvsExpScore/R5.8.2.TN/CorrScores.tab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/csc_devel/support/Reconst/NumbModels.tab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC1Log.final.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC1Log.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC1Log.progress.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC1SJ.out.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC2Log.final.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC2Log.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC2Log.progress.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC2SJ.out.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC3Log.final.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC3Log.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC3Log.progress.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/FCC3SJ.out.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC1Log.final.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC1Log.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC1Log.progress.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC1SJ.out.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC2Log.final.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC2Log.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC2Log.progress.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC2SJ.out.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC3Log.final.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC3Log.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC3Log.progress.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/Alignments/SCC3SJ.out.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/NormData/NormGeneExp_Samples.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/agogo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/bgfooter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/bgtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/comment-bright.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/comment-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/comment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/down-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/qualimap_logo_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/report.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/underscore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/up-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/css/websupport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/images_qualimapReport/Coverage Profile Along Genes (High).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/images_qualimapReport/Coverage Profile Along Genes (Low).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/images_qualimapReport/Coverage Profile Along Genes (Total).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/images_qualimapReport/Junction Analysis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/images_qualimapReport/Reads Genomic Origin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/images_qualimapReport/Transcript coverage histogram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/qualimapReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/raw_data_qualimapReport/coverage_profile_along_genes_(high).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/raw_data_qualimapReport/coverage_profile_along_genes_(low).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/raw_data_qualimapReport/coverage_profile_along_genes_(total).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC1/rnaseq_qc_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/agogo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/bgfooter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/bgtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/comment-bright.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/comment-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/comment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/down-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/qualimap_logo_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/report.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/underscore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/up-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/css/websupport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/images_qualimapReport/Coverage Profile Along Genes (High).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/images_qualimapReport/Coverage Profile Along Genes (Low).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/images_qualimapReport/Coverage Profile Along Genes (Total).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/images_qualimapReport/Junction Analysis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/images_qualimapReport/Reads Genomic Origin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/images_qualimapReport/Transcript coverage histogram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/qualimapReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/raw_data_qualimapReport/coverage_profile_along_genes_(high).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/raw_data_qualimapReport/coverage_profile_along_genes_(low).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/raw_data_qualimapReport/coverage_profile_along_genes_(total).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC2/rnaseq_qc_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/agogo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/bgfooter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/bgtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/comment-bright.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/comment-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/comment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/down-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/qualimap_logo_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/report.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/underscore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/up-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/css/websupport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/images_qualimapReport/Coverage Profile Along Genes (High).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/images_qualimapReport/Coverage Profile Along Genes (Low).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/images_qualimapReport/Coverage Profile Along Genes (Total).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/images_qualimapReport/Junction Analysis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/images_qualimapReport/Reads Genomic Origin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/images_qualimapReport/Transcript coverage histogram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/qualimapReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/raw_data_qualimapReport/coverage_profile_along_genes_(high).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/raw_data_qualimapReport/coverage_profile_along_genes_(low).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/raw_data_qualimapReport/coverage_profile_along_genes_(total).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/FCC3/rnaseq_qc_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/agogo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/bgfooter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/bgtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/comment-bright.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/comment-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/comment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/down-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/qualimap_logo_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/report.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/underscore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/up-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/css/websupport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/images_qualimapReport/Coverage Profile Along Genes (High).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/images_qualimapReport/Coverage Profile Along Genes (Low).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/images_qualimapReport/Coverage Profile Along Genes (Total).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/images_qualimapReport/Junction Analysis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/images_qualimapReport/Reads Genomic Origin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/images_qualimapReport/Transcript coverage histogram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/qualimapReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/raw_data_qualimapReport/coverage_profile_along_genes_(high).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/raw_data_qualimapReport/coverage_profile_along_genes_(low).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/raw_data_qualimapReport/coverage_profile_along_genes_(total).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC1/rnaseq_qc_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/agogo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/bgfooter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/bgtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/comment-bright.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/comment-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/comment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/down-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/qualimap_logo_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/report.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/underscore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/up-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/css/websupport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/images_qualimapReport/Coverage Profile Along Genes (High).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/images_qualimapReport/Coverage Profile Along Genes (Low).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/images_qualimapReport/Coverage Profile Along Genes (Total).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/images_qualimapReport/Junction Analysis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/images_qualimapReport/Reads Genomic Origin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/images_qualimapReport/Transcript coverage histogram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/qualimapReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/raw_data_qualimapReport/coverage_profile_along_genes_(high).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/raw_data_qualimapReport/coverage_profile_along_genes_(low).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/raw_data_qualimapReport/coverage_profile_along_genes_(total).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC2/rnaseq_qc_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/agogo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/ajax-loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/bgfooter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/bgtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/comment-bright.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/comment-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/comment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/down-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/qualimap_logo_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/report.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/underscore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/up-pressed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/css/websupport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/images_qualimapReport/Coverage Profile Along Genes (High).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/images_qualimapReport/Coverage Profile Along Genes (Low).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/images_qualimapReport/Coverage Profile Along Genes (Total).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/images_qualimapReport/Junction Analysis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/images_qualimapReport/Reads Genomic Origin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/images_qualimapReport/Transcript coverage histogram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/qualimapReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/raw_data_qualimapReport/coverage_profile_along_genes_(high).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/raw_data_qualimapReport/coverage_profile_along_genes_(low).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/raw_data_qualimapReport/coverage_profile_along_genes_(total).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/QCAlignments/SCC3/rnaseq_qc_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/FCC1.RawCounts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/FCC1Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/FCC2.RawCounts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/FCC2Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/FCC3.RawCounts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/FCC3Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/SCC1.RawCounts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/SCC1Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/SCC2.RawCounts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/SCC2Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/SCC3.RawCounts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/RawCounts/SCC3Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC1_1_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC1_1_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC1_2_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC1_2_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC2_1_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC2_1_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC2_2_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC2_2_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC3_1_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC3_1_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC3_2_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/FCC3_2_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC1_1_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC1_1_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC1_2_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC1_2_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC2_1_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC2_1_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC2_2_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC2_2_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC3_1_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC3_1_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC3_2_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCRaw/SCC3_2_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedFowardUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedFowardUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedFoward_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedFoward_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedReverseUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedReverseUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedReverse_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC1TrimmedReverse_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedFowardUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedFowardUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedFoward_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedFoward_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedReverseUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedReverseUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedReverse_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC2TrimmedReverse_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedFowardUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedFowardUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedFoward_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedFoward_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedReverseUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedReverseUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedReverse_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/FCC3TrimmedReverse_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedFowardUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedFowardUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedFoward_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedFoward_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedReverseUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedReverseUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedReverse_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC1TrimmedReverse_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedFowardUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedFowardUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedFoward_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedFoward_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedReverseUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedReverseUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedReverse_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC2TrimmedReverse_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedFowardUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedFowardUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedFoward_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedFoward_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedReverseUnpaired_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedReverseUnpaired_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedReverse_fastqc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/fastQCtrim/SCC3TrimmedReverse_fastqc.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/FCC1Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/FCC1TrimmedFoward.fastq.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/FCC2Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/FCC3Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/SCC1Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/SCC2Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/data/studies/R4.10.2/trimmedData/SCC3Summary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/MoreCCRank.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/MoreCSCRank.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/RcGeneMetb_boxplot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/Rc_barplotissue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/Rc_boxplotissue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/SubsLessThan4Reac" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/clusterMoreDiff.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/clusterTsIndStd/liver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/pfbaEnrich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Pathways/pfbaPvalHeatMap.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/FailedTasks.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/ModelGapFillSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/ModelNoAlgmSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/ModelNoGrowNoFeasibility.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/RecModelBounds.tab" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/RecModelBounds.tab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/TasksGapFillSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst/reconstReac.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/FailedTasks.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/ModelGapFillSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/ModelNoAlgmSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/ModelNoGrowNoFeasibility.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/RecModelBounds.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/TasksGapFillSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/Reconst2/reconstReac.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/pFBA.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/pfbaOrdAbsVal.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/studies/M4.2.7/explCluster_MetbGenes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/results/subsytemInfo.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/scripts/LethalityEval.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/scripts/pFBAPval.R" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/pFBAPval.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/scripts/reconstAllStud.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/scripts/scaleGenExp.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/scripts/testGeneScrs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/src/LethalityEvalFunct.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/src/LethalityEvalFunct.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/src/ModelInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/src/ModelInfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/src/medium.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/src/medium.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/src/reconstAllStudFunct.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/src/reconstAllStudFunct.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/src/scaleGenExpFunct.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/src/testGeneScrsFunct.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/src/tasksFunct.py" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/src/tasksFunct.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst10034" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst1038" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst10380" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst1384" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst1730" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst2076" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst2422" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst2768" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst3114" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst346" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst3460" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst3806" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst4152" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst4498" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst4844" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst5190" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst5536" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst5882" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst6228" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst6574" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst692" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst6920" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst7266" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst7612" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst7958" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst8304" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst8650" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst8996" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst9342" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssLst9688" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo10034" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo1038" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo10380" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo1384" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo1730" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo2076" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo2422" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo2768" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo3114" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo346" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo3460" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo3806" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo4152" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo4498" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo4844" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo5190" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo5882" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo6228" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo6574" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo692" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo6920" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo7266" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo7612" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo7958" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/EssRcKo/EssRcKo9688" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/GapFillRes/M2.1.13/FailedTasks.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/GapFillRes/M2.1.13/ModelGapFillSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/GapFillRes/M2.1.13/ModelNoAlgmSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/GapFillRes/M2.1.13/ModelNoGrowNoFeasibility.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/GapFillRes/M2.1.13/RecModelBounds.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/GapFillRes/M2.1.13/TasksGapFillSol.tab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/Reac4Reconst/M2.1.13reconstReac.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/allTasks/humanGEMMetAssoc.JSON" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/allTasks/metabolicTasks_Full.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/allTasks/processedTasks.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/essentialTasks/56metTasks4iHuman.json" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/essentialTasks/56metTasks4iHuman.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/essentialTasks/EssentialReactions4Tasks.tab" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/essentialTasks/EssentialReactions4Tasks.tab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/essentialTasks/GenericModelFailedTasks.tab" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/essentialTasks/GenericModelFailedTasks.tab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/MetbTasks/metabolicTasks_VerifyModel.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/AllStudiesAllthresholdsDct.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/AllStudiesAllthresholdsDct_medianCorr.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/MeasuredDistanceDf.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/SimInferior2RealDistanceDfList.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/SimInferior2RealDistanceDfList.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/SimulatedDistanceDfList.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/SimulatedDistanceDfList.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/sample_info.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/threshighestNbGroups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/threshighestNbGroups_microarray" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/threshighestNbGroups_rnaseq" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="JupyterTrust" id="6afa09d0-8500-4d83-854a-f6ac9954528e" />
+  <component name="ProjectId" id="1kNWSfxHgVmGqcJVH2wlkyT8yxe" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/mirs" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/projects/csc_devel/scripts" />
+      <recent name="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/ModelRc2Test" />
+      <recent name="$PROJECT_DIR$/projects/csc_devel/src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/projects/csc_devel/scripts" />
+      <recent name="$PROJECT_DIR$/projects/csc_devel/src" />
+      <recent name="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval/ModelRc2Test" />
+      <recent name="$PROJECT_DIR$/projects/csc_devel/support/LethalityEval" />
+      <recent name="$PROJECT_DIR$/projects/csc_devel/support/TestGeneScores/Reac4Reconst" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.hello">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="human_ts_models" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="hello" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="human_ts_models" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects/csc_devel/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/csc_devel/scripts/hello.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="oi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="human_ts_models" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects/csc_devel/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/csc_devel/scripts/oi.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.hello" />
+        <item itemvalue="Python.oi" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SshConsoleOptionsProvider">
+    <option name="myEncoding" value="UTF-8" />
+    <option name="myConnectionType" value="NONE" />
+    <option name="myConnectionId" value="" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9f748eb-a9d0-480b-ad45-a1fca7ec55fb" name="Default Changelist" comment="" />
+      <created>1605541531071</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605541531071</updated>
+      <workItem from="1606134624626" duration="463231000" />
+      <workItem from="1608550648095" duration="661000" />
+      <workItem from="1608552014057" duration="56294000" />
+      <workItem from="1608753151212" duration="538000" />
+      <workItem from="1608753742563" duration="127125000" />
+      <workItem from="1609270786145" duration="520000" />
+      <workItem from="1609271322886" duration="325000" />
+      <workItem from="1609271665107" duration="5000" />
+      <workItem from="1609271685175" duration="215000" />
+      <workItem from="1609271918800" duration="165000" />
+      <workItem from="1609272101413" duration="35000" />
+      <workItem from="1609272451894" duration="12357000" />
+      <workItem from="1609427331589" duration="127000" />
+      <workItem from="1609427711599" duration="144000" />
+      <workItem from="1609428666134" duration="217000" />
+      <workItem from="1609428968324" duration="78000" />
+      <workItem from="1609429369928" duration="368000" />
+      <workItem from="1609430670233" duration="510000" />
+      <workItem from="1609431197590" duration="1603000" />
+      <workItem from="1609432828781" duration="20284000" />
+      <workItem from="1609870178812" duration="3376000" />
+      <workItem from="1609928455774" duration="50680000" />
+      <workItem from="1610279325909" duration="124110000" />
+      <workItem from="1610979748657" duration="8967000" />
+      <workItem from="1610991031558" duration="720000" />
+      <workItem from="1610991775848" duration="1031000" />
+      <workItem from="1610992837933" duration="4357000" />
+      <workItem from="1610997593983" duration="45523000" />
+      <workItem from="1611150447313" duration="61399000" />
+      <workItem from="1611686068755" duration="925000" />
+      <workItem from="1611741765933" duration="770000" />
+      <workItem from="1611757300157" duration="16448000" />
+      <workItem from="1611817252448" duration="12656000" />
+      <workItem from="1611847152360" duration="10355000" />
+      <workItem from="1611865276528" duration="3213000" />
+      <workItem from="1611913546058" duration="15184000" />
+      <workItem from="1611939610964" duration="11554000" />
+      <workItem from="1611962948882" duration="680000" />
+      <workItem from="1611994844213" duration="6104000" />
+      <workItem from="1612010063887" duration="5607000" />
+      <workItem from="1612088440353" duration="5732000" />
+      <workItem from="1612171357264" duration="86914000" />
+      <workItem from="1612525069856" duration="6150000" />
+      <workItem from="1612535580158" duration="29460000" />
+      <workItem from="1612718913191" duration="737000" />
+      <workItem from="1612776362042" duration="15304000" />
+      <workItem from="1612798757254" duration="40486000" />
+      <workItem from="1612952013024" duration="14553000" />
+      <workItem from="1613040620266" duration="1049000" />
+      <workItem from="1613381552666" duration="51194000" />
+      <workItem from="1613580445724" duration="9932000" />
+      <workItem from="1613639570246" duration="22686000" />
+      <workItem from="1613668466946" duration="3418000" />
+      <workItem from="1613728665675" duration="23366000" />
+      <workItem from="1613830816138" duration="9567000" />
+      <workItem from="1613901705548" duration="19164000" />
+      <workItem from="1613985531022" duration="13695000" />
+      <workItem from="1614004279964" duration="10785000" />
+      <workItem from="1614073272211" duration="14861000" />
+      <workItem from="1614094173652" duration="7804000" />
+      <workItem from="1614103358441" duration="2363000" />
+      <workItem from="1614158169251" duration="8352000" />
+      <workItem from="1614184674243" duration="7604000" />
+      <workItem from="1614244819022" duration="18231000" />
+      <workItem from="1614508999406" duration="17167000" />
+      <workItem from="1614590690187" duration="7182000" />
+      <workItem from="1614677944009" duration="11516000" />
+      <workItem from="1614690612759" duration="10201000" />
+      <workItem from="1614708888100" duration="1052000" />
+      <workItem from="1614767251534" duration="788000" />
+      <workItem from="1614776877234" duration="13310000" />
+      <workItem from="1614872881275" duration="14428000" />
+      <workItem from="1614938145397" duration="20938000" />
+      <workItem from="1615197874035" duration="13351000" />
+      <workItem from="1615223532201" duration="3981000" />
+      <workItem from="1615284238821" duration="1859000" />
+      <workItem from="1615300858433" duration="12369000" />
+      <workItem from="1615387422884" duration="8214000" />
+      <workItem from="1615456411623" duration="27691000" />
+      <workItem from="1615545279678" duration="17112000" />
+      <workItem from="1619091261407" duration="8390000" />
+      <workItem from="1619600161159" duration="19359000" />
+      <workItem from="1619629067537" duration="5330000" />
+      <workItem from="1619684544679" duration="13677000" />
+      <workItem from="1619775591976" duration="14576000" />
+      <workItem from="1619862741333" duration="6791000" />
+      <workItem from="1619950202792" duration="881000" />
+      <workItem from="1620044685310" duration="5492000" />
+      <workItem from="1620474008605" duration="1860000" />
+      <workItem from="1620637088017" duration="5673000" />
+      <workItem from="1620648152631" duration="10686000" />
+      <workItem from="1620661733446" duration="3037000" />
+      <workItem from="1620741510474" duration="3933000" />
+      <workItem from="1620745697341" duration="9047000" />
+      <workItem from="1620818273195" duration="16802000" />
+      <workItem from="1620897184825" duration="3550000" />
+      <workItem from="1620900789464" duration="7694000" />
+      <workItem from="1622107386920" duration="11829000" />
+      <workItem from="1622193030536" duration="13203000" />
+      <workItem from="1622367022470" duration="1452000" />
+      <workItem from="1622368512446" duration="3539000" />
+      <workItem from="1622378393604" duration="5983000" />
+      <workItem from="1622391453442" duration="373000" />
+      <workItem from="1626511468766" duration="552000" />
+      <workItem from="1626512188480" duration="599000" />
+      <workItem from="1626516744038" duration="437000" />
+      <workItem from="1626517202161" duration="4343000" />
+      <workItem from="1626597888919" duration="9131000" />
+      <workItem from="1626620189416" duration="6734000" />
+      <workItem from="1626682267564" duration="6640000" />
+      <workItem from="1626693313296" duration="2257000" />
+      <workItem from="1626695646095" duration="7149000" />
+      <workItem from="1626717146204" duration="27000" />
+      <workItem from="1626765517960" duration="5238000" />
+      <workItem from="1626772455144" duration="8620000" />
+      <workItem from="1626869773830" duration="4792000" />
+      <workItem from="1626876376708" duration="8464000" />
+      <workItem from="1626957240941" duration="7364000" />
+      <workItem from="1626966927826" duration="372000" />
+      <workItem from="1626967316710" duration="17000" />
+      <workItem from="1627033480021" duration="12407000" />
+      <workItem from="1627287561485" duration="257000" />
+      <workItem from="1634286571755" duration="598000" />
+      <workItem from="1634287235948" duration="194000" />
+      <workItem from="1634287451832" duration="149000" />
+      <workItem from="1634287616467" duration="1053000" />
+      <workItem from="1634288766225" duration="3707000" />
+      <workItem from="1634292765525" duration="144000" />
+      <workItem from="1634292951055" duration="16858000" />
+      <workItem from="1634375738648" duration="5529000" />
+      <workItem from="1634393969680" duration="9843000" />
+      <workItem from="1634546326521" duration="14897000" />
+      <workItem from="1634630928120" duration="1263000" />
+      <workItem from="1634715664958" duration="14647000" />
+    </task>
+    <task id="LOCAL-00001" summary="begining">
+      <created>1609082809725</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1609082809725</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="begining" />
+    <option name="LAST_COMMIT_MESSAGE" value="begining" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/human_ts_models$hello.coverage" NAME="hello Coverage Results" MODIFIED="1627039834898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/csc_devel/scripts" />
+  </component>
+</project>

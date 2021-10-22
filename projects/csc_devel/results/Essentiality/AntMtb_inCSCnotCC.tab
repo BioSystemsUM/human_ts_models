@@ -1,0 +1,23 @@
+Essential Metabolite	Antimetabolite	liver	ovary	AML	kidney	head and neck	prostate	glioblastoma	breast	lung	pancreas
+octadecenoylcarnitine(5)	Choline	True	False	False	False	False	False	False	False	False	False
+palmitoleoyl-carnitine	Choline	True	False	False	False	False	False	False	False	False	False
+heptadecanoylcarnitine	Choline, Cytarabine	True	False	False	False	False	False	False	False	False	False
+(6Z,9Z)-octadecadienoylcarnitine	Choline	True	False	False	False	False	False	False	False	False	False
+linoleic-carnitine	Choline, Cytarabine	True	True	False	False	False	False	False	False	False	False
+dGDP	Decitabine	False	False	True	False	False	False	False	False	False	False
+2-deoxy-D-ribose-1-phosphate	Capecitabine, 8-azaguanine	False	False	True	True	False	False	False	False	False	False
+dGDP	Fludarabine, Cladribine, Decitabine	False	False	False	True	False	False	False	False	False	False
+guanine	Capecitabine, 8-azaguanine	False	False	False	True	False	False	False	True	False	False
+deoxyguanosine	Capecitabine, 8-azaguanine	False	False	False	True	False	False	False	False	False	False
+1,2-diacylglycerol-LD-PC pool	Choline	False	False	False	False	False	True	False	False	False	False
+ribose-1-phosphate	Fluorouracil, 8-azaguanine	False	False	False	False	False	True	False	False	False	False
+adenine	Mercaptopurine, 8-azaguanine	False	False	False	False	False	True	False	False	False	False
+ribulose-5-phosphate	Methotrexate	False	False	False	False	False	False	True	False	False	False
+dGMP	Nelarabine	False	False	False	False	False	False	False	True	False	False
+CDP-ethanolamine	Choline	False	False	False	False	False	False	False	True	False	False
+deoxyguanosine	Mercaptopurine, Nelarabine, Capecitabine, Fludarabine, 8-azaguanine	False	False	False	False	False	False	False	True	False	False
+L-oleoylcarnitine	Choline, Cytarabine	False	False	False	False	False	False	False	False	True	False
+arachidonyl-carnitine	Choline	False	False	False	False	False	False	False	False	True	False
+2-deoxy-D-ribose-1-phosphate	Fluorouracil	False	False	False	False	False	False	False	False	True	False
+cytidine	Fludarabine, Ribavirin, Cytarabine	False	False	False	False	False	False	False	False	True	False
+10,13,16,19-docosatetraenoylcarnitine	Choline	False	False	False	False	False	False	False	False	False	True
