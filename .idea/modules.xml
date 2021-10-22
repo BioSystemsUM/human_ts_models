@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$USER_HOME$/cobamp/.idea/cobamp.iml" filepath="$USER_HOME$/cobamp/.idea/cobamp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/human_ts_models.iml" filepath="$PROJECT_DIR$/.idea/human_ts_models.iml" />
+      <module fileurl="file://$USER_HOME$/troppo/.idea/troppo.iml" filepath="$USER_HOME$/troppo/.idea/troppo.iml" />
+    </modules>
+  </component>
+</project>
