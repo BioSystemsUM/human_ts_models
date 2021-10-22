@@ -28,7 +28,7 @@ for r in taskModel.boundary:
 fname = sys.argv[1] # name of file with a group of reactions (access bash variable)
 frids = pd.read_csv(os.path.join(BaseDir, 'support/LethalityEval/ModelRc2Test/' + fname)).iloc[:,0]
 frids = frids.tolist()
-# save reactions essential to at least one task into a list:
+# saAchilles_gene_effect_v2.csvve reactions essential to at least one task into a list:
 TasksReacKoLst = list()
 for rid in frids:
     rid, bool = EvalTasksReacKo(rid, taskModel, task_list)
