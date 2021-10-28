@@ -1,0 +1,8 @@
+	Genes	thres	globalmin	globalmax	local	algorithm	int_function	essential_cutoff	biomass_cutoff	value
+49	MetbGenes	local2	2	4.0	4.0	fastcore	minsum	3	1	0.3332006683850096
+50	MetbGenes	local2	0	4.0	0.0	fastcore	minmax	3	1	0.37023809345828806
+51	MetbGenes	local2	0	4.0	0.0	init	minmax	3	1	0.3675055313871251
+52	MetbGenes	local2	0	4.0	0.0	fastcore	minsum	3	1	0.3534756583342067
+53	MetbGenes	local2	0	4.0	0.0	init	minsum	3	1	0.35225428786898966
+54	MetbGenes	local1	4	nan	4.0	fastcore	minsum	3	1	0.3433071887437693
+55	MetbGenes	local2	3	4.0	4.0	fastcore	minsum	3	1	0.3459638446111733

@@ -1,0 +1,14 @@
+Essential Metabolite	Antimetabolite	liver	ovary	AML	kidney	head and neck	prostate	glioblastoma	breast	lung	pancreas
+1,2-diacylglycerol-LD-PC pool	Choline	True	True	True	True	True	False	False	True	False	True
+dGDP	Fludarabine, Cladribine, Decitabine	True	False	False	False	False	False	False	False	False	False
+2-deoxy-D-ribose-1-phosphate	Capecitabine, 8-azaguanine	True	False	False	False	False	True	False	True	False	True
+guanine	Capecitabine, 8-azaguanine	True	False	False	False	False	False	False	False	False	False
+dGMP	Nelarabine	True	False	False	False	False	False	False	False	False	False
+deoxyguanosine	Mercaptopurine, Nelarabine, Capecitabine, Fludarabine, 8-azaguanine	True	False	False	False	False	False	False	False	False	False
+dADP	Fludarabine, Cladribine, Decitabine	True	False	False	False	False	False	False	False	False	False
+phosphocholine	Choline	False	False	True	False	False	False	False	True	False	True
+CDP-choline	Choline	False	False	True	False	False	False	False	True	False	True
+dADP	Decitabine	False	False	False	True	True	True	True	True	False	True
+dGDP	Decitabine	False	False	False	False	False	True	False	True	True	True
+stearoylcarnitine	Choline	False	False	False	False	False	False	True	False	False	False
+adenine	8-azaguanine	False	False	False	False	False	False	False	False	False	True
